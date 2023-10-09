@@ -8,4 +8,16 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\folder-plus.png" />
+    <None Remove="Resources\minus-circle.png" />
+    <None Remove="Resources\plus-circle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\folder-plus.png" />
+    <Resource Include="Resources\minus-circle.png" />
+    <Resource Include="Resources\plus-circle.png" />
+  </ItemGroup>
+
 </Project>
