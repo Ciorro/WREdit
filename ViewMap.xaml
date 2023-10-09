@@ -8,4 +8,7 @@
     <DataTemplate DataType="{x:Type vms:EntitiesListingViewModel}">
         <vws:EntitiesListingView/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vms:ActionSettingsViewModel}">
+        <vws:ActionSettingsView/>
+    </DataTemplate>
 </ResourceDictionary>

@@ -5,6 +5,7 @@
         public AppViewModel()
         {
             EntitiesListing = new EntitiesListingViewModel();
+            ActionSettings = new ActionSettingsViewModel();
         }
 
         private EntitiesListingViewModel? _entitiesListing;
@@ -14,6 +15,17 @@
             set
             {
                 _entitiesListing = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ActionSettingsViewModel? _actionSettings;
+        public ActionSettingsViewModel? ActionSettings
+        {
+            get => _actionSettings;
+            set
+            {
+                _actionSettings = value;
                 OnPropertyChanged();
             }
         }

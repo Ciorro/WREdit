@@ -20,14 +20,18 @@
         <ContentControl
             Grid.Row="0"
             Grid.Column="0"
-            Margin="5"
+            Margin="4,4,0,4"
             Content="{Binding EntitiesListing}" />
-        <ContentControl Grid.Row="0" Grid.Column="2" />
+        <ContentControl
+            Grid.Row="0"
+            Grid.Column="2"
+            Margin="0,4,4,4"
+            Content="{Binding ActionSettings}" />
         <StatusBar
             Grid.Row="1"
             Grid.Column="0"
             Grid.ColumnSpan="3"
-            Height="20" />
+            Height="25" />
         <GridSplitter
             Grid.Row="0"
             Grid.Column="1"
