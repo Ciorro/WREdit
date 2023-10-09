@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vms="clr-namespace:WREdit.ViewModels"
+                    xmlns:vws="clr-namespace:WREdit.Views">
+    <DataTemplate DataType="{x:Type vms:AppViewModel}">
+        <vws:AppView/>
+    </DataTemplate>
+</ResourceDictionary>
