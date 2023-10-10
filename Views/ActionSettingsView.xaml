@@ -15,13 +15,13 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ComboBox Grid.Row="0" Height="25" />
+        <ComboBox Grid.Row="0" Height="22" />
 
         <ContentControl Grid.Row="1" Margin="0,4"/>
 
         <DockPanel Grid.Row="2" LastChildFill="False">
             <Button
-                Height="25"
+                Height="22"
                 Padding="6,0"
                 DockPanel.Dock="Right">
                 <StackPanel Orientation="Horizontal">

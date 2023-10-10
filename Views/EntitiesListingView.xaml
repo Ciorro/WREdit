@@ -12,14 +12,17 @@
         <ContextMenu x:Key="AddOptionsMenu">
             <MenuItem Header="Add folder">
                 <MenuItem.Icon>
-                    <Image Source="/Resources/folder-plus.png"/>
+                    <Image Source="/Resources/folder-plus.png" />
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
     </UserControl.Resources>
     <DockPanel>
-        <DockPanel DockPanel.Dock="Top" LastChildFill="False">
-            <Button Padding="2,0" x:Name="PrimaryAdd">
+        <DockPanel
+            Height="22"
+            DockPanel.Dock="Top"
+            LastChildFill="False">
+            <Button x:Name="PrimaryAdd" Padding="2,0">
                 <StackPanel Orientation="Horizontal">
                     <Image
                         Height="16"
@@ -28,7 +31,10 @@
                     <TextBlock VerticalAlignment="Center" Text="Add building" />
                 </StackPanel>
             </Button>
-            <Button Padding="4,0" BorderThickness="0,1,1,1" Click="RevealAddOptions">
+            <Button
+                Padding="4,0"
+                BorderThickness="0,1,1,1"
+                Click="RevealAddOptions">
                 <Path Fill="Black">
                     <Path.Data>
                         <PathGeometry>
@@ -53,7 +59,7 @@
                 Width="150"
                 VerticalContentAlignment="Center"
                 DockPanel.Dock="Right" />
-            <Label Content="Filter:" DockPanel.Dock="Right" />
+            <TextBlock DockPanel.Dock="Right" Text="Filter:" VerticalAlignment="Center" Margin="4,0 "/>
         </DockPanel>
         <ListBox Margin="0,4,0,0" />
     </DockPanel>
