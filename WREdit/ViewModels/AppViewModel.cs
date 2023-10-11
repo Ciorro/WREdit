@@ -1,15 +1,17 @@
-﻿namespace WREdit.ViewModels
+﻿using WREdit.DataAccess;
+
+namespace WREdit.ViewModels
 {
     internal class AppViewModel : ViewModelBase
     {
         public AppViewModel()
         {
-            EntitiesListing = new EntitiesListingViewModel();
+            EntitiesListing = new GameObjectListingViewModel(new GameObjectLoader());
             ActionSettings = new ActionSettingsViewModel();
         }
 
-        private EntitiesListingViewModel? _entitiesListing;
-        public EntitiesListingViewModel? EntitiesListing
+        private GameObjectListingViewModel? _entitiesListing;
+        public GameObjectListingViewModel? EntitiesListing
         {
             get => _entitiesListing;
             set

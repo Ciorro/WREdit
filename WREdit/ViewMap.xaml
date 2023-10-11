@@ -5,8 +5,8 @@
     <DataTemplate DataType="{x:Type vms:AppViewModel}">
         <vws:AppView/>
     </DataTemplate>
-    <DataTemplate DataType="{x:Type vms:EntitiesListingViewModel}">
-        <vws:EntitiesListingView/>
+    <DataTemplate DataType="{x:Type vms:GameObjectListingViewModel}">
+        <vws:GameObjectListingView/>
     </DataTemplate>
     <DataTemplate DataType="{x:Type vms:ActionSettingsViewModel}">
         <vws:ActionSettingsView/>

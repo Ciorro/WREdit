@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models - Copy\**" />
+    <EmbeddedResource Remove="Models - Copy\**" />
+    <None Remove="Models - Copy\**" />
+    <Page Remove="Models - Copy\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\folder-plus.png" />
     <None Remove="Resources\minus-circle.png" />
     <None Remove="Resources\plus-circle.png" />
