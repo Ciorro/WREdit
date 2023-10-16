@@ -18,9 +18,9 @@ namespace WREdit.Views
     /// <summary>
     /// Interaction logic for ActionSettingsView.xaml
     /// </summary>
-    public partial class ActionSettingsView : UserControl
+    public partial class ActionsView : UserControl
     {
-        public ActionSettingsView()
+        public ActionsView()
         {
             InitializeComponent();
         }

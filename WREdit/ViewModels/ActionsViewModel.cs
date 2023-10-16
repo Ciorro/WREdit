@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WREdit.ViewModels
 {
-    internal class ActionSettingsViewModel : ViewModelBase
+    internal class ActionsViewModel : ViewModelBase
     {
     }
 }
