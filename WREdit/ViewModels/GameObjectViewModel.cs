@@ -1,4 +1,4 @@
-﻿using WREdit.Models;
+﻿using WREdit.Base.Models;
 
 namespace WREdit.ViewModels
 {

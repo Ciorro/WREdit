@@ -23,6 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WREdit.Base\WREdit.Base.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\folder-plus.png" />
     <Resource Include="Resources\minus-circle.png" />
     <Resource Include="Resources\plus-circle.png" />
