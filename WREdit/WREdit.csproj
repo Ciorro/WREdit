@@ -16,10 +16,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Actions\WREdit.Actions.dll" />
     <None Remove="Resources\folder-plus.png" />
     <None Remove="Resources\minus-circle.png" />
     <None Remove="Resources\plus-circle.png" />
     <None Remove="Resources\tick-circle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Actions\WREdit.Actions.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
