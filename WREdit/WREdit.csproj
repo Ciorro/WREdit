@@ -9,13 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models - Copy\**" />
-    <EmbeddedResource Remove="Models - Copy\**" />
-    <None Remove="Models - Copy\**" />
-    <Page Remove="Models - Copy\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Actions\WREdit.Actions.dll" />
     <None Remove="Resources\folder-plus.png" />
     <None Remove="Resources\minus-circle.png" />
@@ -24,9 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Actions\WREdit.Actions.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Actions\*.dll" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
