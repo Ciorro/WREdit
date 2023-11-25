@@ -9,7 +9,7 @@ namespace WREdit.ViewModels
     {
         private readonly IGameObjectLoader _loader;
 
-        public ObservableCollection<GameObjectViewModel> GameObjects { get; } = new();
+        public ObservableCollection<GameObjectItemViewModel> GameObjects { get; } = new();
         public ICommand AddObjectCommand { get; }
         public ICommand RemoveObjectCommand { get; }
 
@@ -33,7 +33,7 @@ namespace WREdit.ViewModels
             if (fileDialog.ShowDialog() == true)
             {
                 var gameObject = _loader.Load(fileDialog.FileName);
-                GameObjects.Add(new GameObjectViewModel(gameObject));
+                GameObjects.Add(new GameObjectItemViewModel(gameObject));
             }
         }
 

@@ -2,12 +2,12 @@
 
 namespace WREdit.ViewModels
 {
-    internal class GameObjectViewModel : ViewModelBase
+    internal class GameObjectItemViewModel : ViewModelBase
     {
         public GameObject GameObject { get; }
         public bool IsSelected { get; set; }
 
-        public GameObjectViewModel(GameObject gameObject)
+        public GameObjectItemViewModel(GameObject gameObject)
         {
             GameObject = gameObject;
 
