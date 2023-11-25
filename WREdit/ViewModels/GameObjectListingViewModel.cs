@@ -17,11 +17,11 @@ namespace WREdit.ViewModels
         {
             _loader = loader;
 
-            AddObjectCommand = new RelayCommand(AddObject);
-            RemoveObjectCommand = new RelayCommand(RemoveObject, CanRemoveObject);
+            AddObjectCommand = new RelayCommand(Add);
+            RemoveObjectCommand = new RelayCommand(Remove, CanRemove);
         }
 
-        private void AddObject()
+        private void Add()
         {
             var fileDialog = new OpenFileDialog
             {
@@ -37,7 +37,7 @@ namespace WREdit.ViewModels
             }
         }
 
-        private void RemoveObject()
+        private void Remove()
         {
             var toRemove = GameObjects.Where(go => go.IsSelected).ToArray();
 
@@ -47,7 +47,7 @@ namespace WREdit.ViewModels
             }
         }
 
-        private bool CanRemoveObject()
+        private bool CanRemove()
         {
             return GameObjects.Any(p => p.IsSelected);
         }
