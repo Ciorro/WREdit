@@ -8,7 +8,7 @@
     <DataTemplate DataType="{x:Type vms:GameObjectListingViewModel}">
         <vws:GameObjectListingView/>
     </DataTemplate>
-    <DataTemplate DataType="{x:Type vms:ActionsViewModel}">
-        <vws:ActionsView/>
+    <DataTemplate DataType="{x:Type vms:ActionSettingsViewModel}">
+        <vws:ActionSettingsView/>
     </DataTemplate>
 </ResourceDictionary>

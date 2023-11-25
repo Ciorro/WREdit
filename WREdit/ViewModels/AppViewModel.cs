@@ -1,4 +1,5 @@
 ﻿using WREdit.DataAccess;
+using WREdit.Plugins;
 
 namespace WREdit.ViewModels
 {
@@ -7,7 +8,7 @@ namespace WREdit.ViewModels
         public AppViewModel()
         {
             EntitiesListing = new GameObjectListingViewModel(new GameObjectLoader());
-            ActionSettings = new ActionsViewModel();
+            ActionSettings = new ActionSettingsViewModel(new PluginManager("Actions"));
         }
 
         private GameObjectListingViewModel? _entitiesListing;
@@ -21,8 +22,8 @@ namespace WREdit.ViewModels
             }
         }
 
-        private ActionsViewModel? _actionSettings;
-        public ActionsViewModel? ActionSettings
+        private ActionSettingsViewModel? _actionSettings;
+        public ActionSettingsViewModel? ActionSettings
         {
             get => _actionSettings;
             set
