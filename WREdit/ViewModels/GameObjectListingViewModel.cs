@@ -27,7 +27,7 @@ namespace WREdit.ViewModels
             {
                 Filter = "*.ini (Ini files)|*.ini",
                 //TODO: Remove:
-                InitialDirectory = "D:\\Gry\\Steam\\steamapps\\workshop\\content\\784150"
+                InitialDirectory = "E:\\Gry\\steamapps\\workshop\\content\\784150"
             };
 
             if (fileDialog.ShowDialog() == true)
