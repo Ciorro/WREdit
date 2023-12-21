@@ -8,7 +8,7 @@ namespace WREdit.ViewModels
         public AppViewModel()
         {
             EntitiesListing = new GameObjectListingViewModel(new GameObjectLoader());
-            ActionSettings = new ActionSettingsViewModel(new PluginManager("Actions"));
+            ActionSettings = new ProcessorsPaneViewModel(new PluginManager("Actions"));
         }
 
         private GameObjectListingViewModel? _entitiesListing;
@@ -22,8 +22,8 @@ namespace WREdit.ViewModels
             }
         }
 
-        private ActionSettingsViewModel? _actionSettings;
-        public ActionSettingsViewModel? ActionSettings
+        private ProcessorsPaneViewModel? _actionSettings;
+        public ProcessorsPaneViewModel? ActionSettings
         {
             get => _actionSettings;
             set

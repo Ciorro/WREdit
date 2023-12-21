@@ -1,14 +1,18 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:vms="clr-namespace:WREdit.ViewModels"
-                    xmlns:vws="clr-namespace:WREdit.Views">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vms="clr-namespace:WREdit.ViewModels"
+    xmlns:vws="clr-namespace:WREdit.Views">
     <DataTemplate DataType="{x:Type vms:AppViewModel}">
-        <vws:AppView/>
+        <vws:AppView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type vms:GameObjectListingViewModel}">
-        <vws:GameObjectListingView/>
+        <vws:GameObjectListingView />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type vms:ActionSettingsViewModel}">
-        <vws:ActionSettingsView/>
+    <DataTemplate DataType="{x:Type vms:ProcessorsPaneViewModel}">
+        <vws:ProcessorsPaneView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vms:ProcessorPropertiesViewModel}">
+        <vws:ProcessorPropertiesView />
     </DataTemplate>
 </ResourceDictionary>

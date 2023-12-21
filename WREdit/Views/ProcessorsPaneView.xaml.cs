@@ -2,9 +2,9 @@
 
 namespace WREdit.Views
 {
-    public partial class ActionSettingsView : UserControl
+    public partial class ProcessorsPaneView : UserControl
     {
-        public ActionSettingsView()
+        public ProcessorsPaneView()
         {
             InitializeComponent();
         }

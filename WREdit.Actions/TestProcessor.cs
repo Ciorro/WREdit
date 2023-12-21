@@ -1,5 +1,4 @@
-﻿using WREdit.Base.Actions;
-using WREdit.Base.Attributes;
+﻿using WREdit.Base.Attributes;
 using WREdit.Base.Models;
 
 namespace WREditActions
@@ -9,25 +8,25 @@ namespace WREditActions
         Runway, Asphalt, Gravel, Mud, None
     }
 
-    [GameObjectAction(DisplayName = "Test action 1")]
-    internal class TestAction : IGameObjectAction
+    [Processor(DisplayName = "Test action 1")]
+    internal class TestProcessor : GameObjectProcessor
     {
         public string? TestString { get; set; }
 
-        [GameObjectActionProperty]
+        [Property]
         public float? TestSingle { get; set; }
         public double TestDouble { get; set; }
 
-        [GameObjectActionProperty("Liczba całkowita")]
+        [Property("Liczba całkowita")]
         public int? TestInt { get; set; }
 
-        [GameObjectActionProperty("Typ wyliczeniowy")]
+        [Property("Typ wyliczeniowy")]
         public GroundType? Ground { get; set; }
 
-        [GameObjectActionProperty("Wartość logiczna")]
+        [Property("Wartość logiczna")]
         public bool? TestBoolean { get; set; }
 
-        public void Execute(GameObject gameObject)
+        public override void Execute(GameObject gameObject)
         {
             Console.WriteLine("Executed");
         }

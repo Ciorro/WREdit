@@ -1,11 +1,11 @@
 ﻿namespace WREdit.Base.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public sealed class GameObjectActionPropertyAttribute : Attribute
+    public sealed class PropertyAttribute : Attribute
     {
         public string? DisplayName { get; set; }
 
-        public GameObjectActionPropertyAttribute(string? displayName = null)
+        public PropertyAttribute(string? displayName = null)
         {
             DisplayName = displayName;
         }

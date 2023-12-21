@@ -1,0 +1,56 @@
+﻿using System.Windows.Input;
+using WREdit.Base.Models;
+using WREdit.Plugins;
+
+namespace WREdit.ViewModels
+{
+    internal class ProcessorsPaneViewModel : ViewModelBase
+    {
+        private readonly IPluginManager _pluginManager;
+
+        public ICommand ExecuteCommand { get; }
+
+        public ProcessorsPaneViewModel(IPluginManager pluginManager)
+        {
+            _pluginManager = pluginManager;
+            _pluginManager.InitializePlugins();
+
+            ExecuteCommand = new RelayCommand(
+                execute: () => { },
+                canExecute: () => SelectedProcessor is not null
+            );
+        }
+
+        public IEnumerable<Type> Processors
+        {
+            get => _pluginManager.Processors;
+        }
+
+        private IGameObjectProcessor? _selectedProcessor;
+        public IGameObjectProcessor? SelectedProcessor
+        {
+            get => _selectedProcessor;
+            set
+            {
+                _selectedProcessor = value;
+                OnPropertyChanged();
+
+                if (value is not null)
+                {
+                    ProcessorProperties = new ProcessorPropertiesViewModel(value);
+                }
+            }
+        }
+
+        private ProcessorPropertiesViewModel? _processorProperties;
+        public ProcessorPropertiesViewModel? ProcessorProperties
+        {
+            get => _processorProperties;
+            set
+            {
+                _processorProperties = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+}

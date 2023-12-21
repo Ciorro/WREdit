@@ -1,46 +1,42 @@
 ﻿using System.IO;
 using System.Reflection;
-using WREdit.Base.Actions;
+using WREdit.Base.Models;
 
 namespace WREdit.Plugins
 {
     internal class PluginManager : IPluginManager
     {
         private readonly string _pluginsDirectory;
-        private IEnumerable<IGameObjectAction>? _actions;
+        private IEnumerable<Type>? _processors;
 
         public PluginManager(string pluginsDirectory)
         {
             _pluginsDirectory = Path.GetFullPath(pluginsDirectory);
         }
 
-        public IEnumerable<IGameObjectAction> Actions
+        public IEnumerable<Type> Processors
         {
-            get => _actions ?? Enumerable.Empty<IGameObjectAction>();
+            get => _processors ?? Enumerable.Empty<Type>();
         }
 
         public void InitializePlugins()
-        { 
-            var plugins = Directory.GetFiles(_pluginsDirectory, "*.dll").
-                          Select(Assembly.LoadFile);
-            _actions = plugins.SelectMany(InitializeActions);
+        {
+            if (Directory.Exists(_pluginsDirectory))
+            {
+                var plugins = Directory.GetFiles(_pluginsDirectory, "*.dll").
+                              Select(Assembly.LoadFile);
+                _processors = plugins.SelectMany(InitializeProcessors);
+            }
         }
 
-        private IEnumerable<IGameObjectAction> InitializeActions(Assembly plugin)
+        private IEnumerable<Type> InitializeProcessors(Assembly plugin)
         {
             var types = plugin.GetTypes();
 
-            var actionTypes = types.Where(type =>
+            return types.Where(type =>
             {
-                return type.IsAssignableTo(typeof(IGameObjectAction));
+                return type.IsAssignableTo(typeof(IGameObjectProcessor));
             });
-
-            var actions = actionTypes.Select(actionType =>
-            {
-                return (IGameObjectAction)Activator.CreateInstance(actionType)!;
-            });
-
-            return actions.Where(action => action is not null);
         }
     }
 }

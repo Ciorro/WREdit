@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="WREdit.Views.ActionSettingsView"
+    x:Class="WREdit.Views.ProcessorsPaneView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:WREdit.Base.Attributes;assembly=WREdit.Base"
@@ -21,11 +21,11 @@
         <ComboBox
             Grid.Row="0"
             Height="22"
-            ItemsSource="{Binding Actions}"
-            SelectedItem="{Binding SelectedAction}">
+            ItemsSource="{Binding Processors}"
+            SelectedItem="{Binding SelectedProcessor, Converter={converter:TypeToInstanceConverter}}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <ContentPresenter Content="{Binding Converter={converter:ActionNameConverter}}"/>
+                    <ContentPresenter Content="{Binding Converter={converter:ProcessorNameConverter}}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
@@ -38,7 +38,7 @@
             BorderThickness="1"
             SnapsToDevicePixels="True">
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding ActionProperties}" />
+                <ContentControl Content="{Binding ProcessorProperties}"/>
             </ScrollViewer>
         </Border>
 

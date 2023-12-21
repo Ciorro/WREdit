@@ -1,30 +1,31 @@
 ﻿using System.Globalization;
-using System.Reflection;
 using System.Windows.Data;
 using System.Windows.Markup;
-using WREdit.Base.Actions;
 using WREdit.Base.Attributes;
+using WREdit.Base.Extensions;
 
 namespace WREdit.Converters
 {
-    internal class ActionNameConverter : MarkupExtension, IValueConverter
+    internal class ProcessorNameConverter : MarkupExtension, IValueConverter
     {
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return new ActionNameConverter();
+            return new ProcessorNameConverter();
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is IGameObjectAction action)
+            if (value is Type processorType)
             {
-                var type = action.GetType();
-                var attr = type.GetCustomAttribute<GameObjectActionAttribute>();
+                if (processorType.TryGetCustomAttribute<ProcessorAttribute>(out var attribute))
+                {
+                    return attribute.DisplayName ?? processorType.Name;
+                }
 
-                return attr?.DisplayName ?? type.Name;
+                return processorType.Name;
             }
 
-            throw new ArgumentException("Value is not an action", nameof(value));
+            throw new ArgumentException($"{value?.GetType().Name} is not a processor.", nameof(value));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

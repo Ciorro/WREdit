@@ -1,10 +1,8 @@
-﻿using WREdit.Base.Actions;
-
-namespace WREdit.Plugins
+﻿namespace WREdit.Plugins
 {
     internal interface IPluginManager
     {
-        IEnumerable<IGameObjectAction> Actions { get; }
+        IEnumerable<Type> Processors { get; }
         void InitializePlugins();
     }
 }
