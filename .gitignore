@@ -396,5 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-WREdit/Actions/*
-WREdit/Plugins/WREdit.Common.dll
+WREdit/Plugins/*.dll
