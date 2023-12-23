@@ -5,9 +5,9 @@ VisualStudioVersion = 17.8.34205.153
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WREdit", "WREdit\WREdit.csproj", "{160F8EFB-94AA-4F4A-B5C3-759B49B77466}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WREdit.Actions", "WREdit.Actions\WREdit.Actions.csproj", "{0716B7C5-CD3F-41A0-B882-A5E7B8FD57DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WREdit.Base", "WREdit_Base\WREdit.Base.csproj", "{3F23AF76-2084-4E9B-A749-ADDF01D0A4C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WREdit.Base", "WREdit.Base\WREdit.Base.csproj", "{3F23AF76-2084-4E9B-A749-ADDF01D0A4C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WREdit.Common", "WREdit_Common\WREdit.Common.csproj", "{09276F90-E99F-4CED-A8AC-23AD2DA22858}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{160F8EFB-94AA-4F4A-B5C3-759B49B77466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{160F8EFB-94AA-4F4A-B5C3-759B49B77466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{160F8EFB-94AA-4F4A-B5C3-759B49B77466}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0716B7C5-CD3F-41A0-B882-A5E7B8FD57DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0716B7C5-CD3F-41A0-B882-A5E7B8FD57DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0716B7C5-CD3F-41A0-B882-A5E7B8FD57DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0716B7C5-CD3F-41A0-B882-A5E7B8FD57DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3F23AF76-2084-4E9B-A749-ADDF01D0A4C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3F23AF76-2084-4E9B-A749-ADDF01D0A4C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F23AF76-2084-4E9B-A749-ADDF01D0A4C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F23AF76-2084-4E9B-A749-ADDF01D0A4C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09276F90-E99F-4CED-A8AC-23AD2DA22858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09276F90-E99F-4CED-A8AC-23AD2DA22858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09276F90-E99F-4CED-A8AC-23AD2DA22858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09276F90-E99F-4CED-A8AC-23AD2DA22858}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

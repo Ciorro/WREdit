@@ -16,7 +16,7 @@ namespace WREdit.ViewModels
             _pluginManager.InitializePlugins();
 
             ExecuteCommand = new RelayCommand(
-                execute: () => { },
+                execute: () => SelectedProcessor?.Execute(null),
                 canExecute: () => SelectedProcessor is not null
             );
         }

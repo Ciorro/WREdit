@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net7.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Actions\WREdit.Actions.dll" />
+    <None Remove="Plugins\WREdit.Common.dll" />
     <None Remove="Resources\folder-plus.png" />
     <None Remove="Resources\minus-circle.png" />
     <None Remove="Resources\plus-circle.png" />
@@ -17,11 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Actions\*.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Plugins\WREdit.Common.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WREdit.Base\WREdit.Base.csproj" />
+    <ProjectReference Include="..\WREdit_Base\WREdit.Base.csproj" />
   </ItemGroup>
 
   <ItemGroup>

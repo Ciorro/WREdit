@@ -1,5 +1,4 @@
-﻿
-using WREdit.Base.Models.Properties;
+﻿using WREdit.Base.Properties;
 
 namespace WREdit.Base.Models
 {

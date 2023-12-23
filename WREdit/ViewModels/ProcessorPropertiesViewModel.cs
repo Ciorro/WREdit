@@ -1,15 +1,21 @@
-﻿using WREdit.Base.Models;
-using WREdit.Base.Models.Properties;
+﻿using System.Collections.ObjectModel;
+using WREdit.Base.Models;
+using WREdit.Base.Properties;
 
 namespace WREdit.ViewModels
 {
     internal class ProcessorPropertiesViewModel : ViewModelBase
     {
-        private readonly IGameObjectProcessor _processor;
+        public ObservableCollection<IProcessorProperty> Properties { get; } = new();
 
         public ProcessorPropertiesViewModel(IGameObjectProcessor processor)
         {
-            _processor = processor;
+            RegisterProperties(processor);
+        }
+
+        private void RegisterProperties(IGameObjectProcessor processor)
+        {
+            processor.RegisterProperties(Properties);
         }
     }
 }
