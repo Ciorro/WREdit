@@ -15,7 +15,7 @@ namespace WREdit.Base.Properties
         {
             if (!instance.GetType().TryGetProperty(propertyName, out var property))
             {
-                throw new ArgumentException($"Property named {propertyName} does not exist in the object of type {instance.GetType()}");
+                throw new ArgumentException($"Property named {propertyName} does not exist in the object of type {instance.GetType()}.");
             }
 
             Property = property;

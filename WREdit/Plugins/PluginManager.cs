@@ -1,10 +1,6 @@
 ﻿using System.IO;
 using System.Reflection;
-using System.Windows;
-using WREdit.Base.Attributes;
-using WREdit.Base.Extensions;
 using WREdit.Base.Models;
-using WREdit.Base.Properties;
 
 namespace WREdit.Plugins
 {
@@ -26,11 +22,6 @@ namespace WREdit.Plugins
                 var plugins = Directory.GetFiles(_pluginsDirectory, "*.dll").
                               Select(Assembly.LoadFile);
                 Processors = plugins.SelectMany(InitializeProcessors);
-
-                foreach (var plugin in plugins)
-                {
-                    InitilizeProcessorProperties(plugin);
-                }
             }
         }
 
@@ -42,34 +33,6 @@ namespace WREdit.Plugins
             {
                 return type.IsAssignableTo(typeof(IGameObjectProcessor));
             });
-        }
-
-        private void InitilizeProcessorProperties(Assembly assembly)
-        {
-            var propertyTypes = assembly.GetTypes().Where(t => t.IsAssignableTo(typeof(IProcessorProperty)));
-
-            foreach (var propertyType in propertyTypes)
-            {
-                InitializePropertyTemplates(propertyType);
-            }
-        }
-
-        private void InitializePropertyTemplates(Type processorPropertyType)
-        {
-            string propertyAssembly = processorPropertyType.Assembly.GetName().Name!;
-
-            if (processorPropertyType.TryGetCustomAttribute<PropertyTemplateAttribute>(out var attribute))
-            {
-                string templatePath = attribute.PropertyTemplatePath;
-                string resourcePath = $"pack://application:,,,/{propertyAssembly};component/{templatePath}";
-
-                var templateResource = new ResourceDictionary
-                {
-                    Source = new Uri(resourcePath)
-                };
-
-                Application.Current.Resources.MergedDictionaries.Add(templateResource);
-            }
         }
     }
 }

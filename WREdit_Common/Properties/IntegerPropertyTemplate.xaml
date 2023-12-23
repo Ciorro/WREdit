@@ -1,11 +1,12 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:p="clr-namespace:WREdit.Common.Properties">
-    <DataTemplate DataType="{x:Type p:IntegerProperty}">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="IntegerProperty">
         <DockPanel>
-            <Label Content="{Binding Name}" />
-            <TextBox VerticalContentAlignment="Center" Text="{Binding Value}" />
+            <TextBlock Text="{Binding Name}" />
+            <TextBox
+                Width="50"
+                HorizontalAlignment="Right"
+                VerticalContentAlignment="Center"
+                Text="{Binding Value}" />
         </DockPanel>
     </DataTemplate>
 </ResourceDictionary>

@@ -4,11 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WREdit.Views"
+    xmlns:templating="clr-namespace:WREdit.Templating"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <templating:PropertyTemplateSelector x:Key="PropertyTemplateSelector"/>
+    </UserControl.Resources>
     <Grid>
-        <ItemsControl Margin="4" ItemsSource="{Binding Properties}" />
+        <ItemsControl Margin="4" ItemsSource="{Binding Properties}" ItemTemplateSelector="{StaticResource PropertyTemplateSelector}"/>
     </Grid>
 </UserControl>
