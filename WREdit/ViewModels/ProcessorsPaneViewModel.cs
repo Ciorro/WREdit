@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using WREdit.Base.Models;
-using WREdit.Plugins;
+using WREdit.Base.Plugins;
 
 namespace WREdit.ViewModels
 {

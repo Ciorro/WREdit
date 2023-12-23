@@ -1,5 +1,5 @@
 ﻿using WREdit.DataAccess;
-using WREdit.Plugins;
+using WREdit.Base.Plugins;
 
 namespace WREdit.ViewModels
 {

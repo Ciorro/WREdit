@@ -1,6 +1,6 @@
-﻿namespace WREdit.Plugins
+﻿namespace WREdit.Base.Plugins
 {
-    internal interface IPluginManager
+    public interface IPluginManager
     {
         IEnumerable<Type> Processors { get; }
         void InitializePlugins();

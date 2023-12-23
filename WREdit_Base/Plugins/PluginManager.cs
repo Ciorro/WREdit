@@ -1,10 +1,9 @@
-﻿using System.IO;
-using System.Reflection;
+﻿using System.Reflection;
 using WREdit.Base.Models;
 
-namespace WREdit.Plugins
+namespace WREdit.Base.Plugins
 {
-    internal class PluginManager : IPluginManager
+    public class PluginManager : IPluginManager
     {
         private readonly string _pluginsDirectory;
         public IEnumerable<Type> Processors { get; private set; }
