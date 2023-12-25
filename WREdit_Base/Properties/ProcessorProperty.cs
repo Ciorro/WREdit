@@ -24,7 +24,7 @@ namespace WREdit.Base.Properties
 
             if (Property.TryGetCustomAttribute<PropertyAttribute>(out var attribute))
             {
-                Name = attribute.DisplayName!;
+                Name = attribute.DisplayName ?? Name;
             }
         }
 

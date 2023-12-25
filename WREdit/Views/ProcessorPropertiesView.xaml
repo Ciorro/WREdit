@@ -4,15 +4,31 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WREdit.Views"
-    xmlns:u="clr-namespace:WREdit.Utils"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:u="clr-namespace:WREdit.Utils"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <u:PropertyTemplateSelector x:Key="PropertyTemplateSelector"/>
+        <u:PropertyTemplateSelector x:Key="PropertyTemplateSelector" />
     </UserControl.Resources>
     <Grid>
-        <ItemsControl Margin="4" ItemsSource="{Binding Properties}" ItemTemplateSelector="{StaticResource PropertyTemplateSelector}"/>
+        <ItemsControl AlternationCount="2" ItemsSource="{Binding Properties}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Name="border" Padding="2">
+                        <ContentPresenter ContentTemplateSelector="{StaticResource PropertyTemplateSelector}" />
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                            <Setter TargetName="border" Property="Background" Value="Transparent" />
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter TargetName="border" Property="Background" Value="Beige" />
+                        </Trigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

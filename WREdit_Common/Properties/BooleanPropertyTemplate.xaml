@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="StringProperty">
+        <UniformGrid Columns="2">
+            <TextBlock Text="{Binding Name}" />
+            <CheckBox
+                Margin="0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                IsChecked="{Binding Value}" />
+        </UniformGrid>
+    </DataTemplate>
+</ResourceDictionary>

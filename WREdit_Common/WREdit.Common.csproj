@@ -11,12 +11,6 @@
     <ProjectReference Include="..\WREdit_Base\WREdit.Base.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Update="Properties\IntegerPropertyTemplate.xaml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Page>
-  </ItemGroup>
-
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
 	    <Exec Command="copy /y &quot;$(ProjectDir)$(OutDir)WREdit.Common.dll&quot; &quot;$(SolutionDir)WREdit\Plugins\WREdit.Common.dll&quot;" />
     </Target>
