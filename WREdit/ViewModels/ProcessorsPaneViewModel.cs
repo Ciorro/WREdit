@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
-using WREdit.Base.Models;
 using WREdit.Base.Plugins;
+using WREdit.Base.Processing;
 
 namespace WREdit.ViewModels
 {
@@ -37,7 +37,7 @@ namespace WREdit.ViewModels
 
                 if (value is not null)
                 {
-                    ProcessorProperties = new ProcessorPropertiesViewModel(value);
+                    ProcessorProperties = new ProcessorPropertiesViewModel(value, _pluginManager);
                 }
             }
         }

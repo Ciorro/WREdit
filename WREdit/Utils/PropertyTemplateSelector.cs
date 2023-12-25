@@ -5,7 +5,7 @@ using WREdit.Base.Attributes;
 using WREdit.Base.Extensions;
 using WREdit.Extensions;
 
-namespace WREdit.Templating
+namespace WREdit.Utils
 {
     internal class PropertyTemplateSelector : DataTemplateSelector
     {

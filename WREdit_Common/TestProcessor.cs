@@ -1,6 +1,7 @@
 ﻿using WREdit.Base.Attributes;
 using WREdit.Base.Extensions;
 using WREdit.Base.Models;
+using WREdit.Base.Processing;
 using WREdit.Base.Properties;
 using WREdit.Common.Properties;
 
@@ -45,12 +46,6 @@ namespace WREdit.Common
             }
         }
 
-        public void RegisterProperties(ICollection<IProcessorProperty> properties)
-        {
-            properties.Add(new IntegerProperty("TestInt", this, 10)
-            {
-                Name = "Testowy int"
-            });
-        }
+        public void RegisterProperties(ICollection<IProcessorProperty> properties) { }
     }
 }

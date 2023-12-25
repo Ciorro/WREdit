@@ -1,6 +1,7 @@
-﻿using WREdit.Base.Properties;
+﻿using WREdit.Base.Models;
+using WREdit.Base.Properties;
 
-namespace WREdit.Base.Models
+namespace WREdit.Base.Processing
 {
     public interface IGameObjectProcessor
     {
