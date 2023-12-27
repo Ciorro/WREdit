@@ -4,7 +4,7 @@ using WREdit.Base.Attributes;
 using WREdit.Base.Extensions;
 using WREdit.Base.Plugins;
 using WREdit.Base.Processing;
-using WREdit.Base.Properties;
+using WREdit.Base.Processing.Properties;
 
 namespace WREdit.ViewModels
 {
@@ -12,13 +12,13 @@ namespace WREdit.ViewModels
     {
         public ObservableCollection<IProcessorProperty> Properties { get; } = new();
 
-        public ProcessorPropertiesViewModel(IGameObjectProcessor processor, IPluginManager pluginManager)
+        public ProcessorPropertiesViewModel(IEntityProcessor processor, IPluginManager pluginManager)
         {
             processor.RegisterProperties(Properties);
             RegisterAutoProperties(processor, pluginManager);
         }
 
-        private void RegisterAutoProperties(IGameObjectProcessor processor, IPluginManager pluginManager)
+        private void RegisterAutoProperties(IEntityProcessor processor, IPluginManager pluginManager)
         {
             var properties = processor.GetType().GetProperties().Where(p =>
             {

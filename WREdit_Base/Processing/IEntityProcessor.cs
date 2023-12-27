@@ -1,11 +1,11 @@
 ﻿using WREdit.Base.Models;
-using WREdit.Base.Properties;
+using WREdit.Base.Processing.Properties;
 
 namespace WREdit.Base.Processing
 {
-    public interface IGameObjectProcessor
+    public interface IEntityProcessor
     {
-        void Execute(GameObject gameObject);
+        void Execute(Entity entity);
         void RegisterProperties(ICollection<IProcessorProperty> properties);
     }
 }

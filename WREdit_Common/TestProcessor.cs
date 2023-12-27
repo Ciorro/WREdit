@@ -2,7 +2,7 @@
 using WREdit.Base.Extensions;
 using WREdit.Base.Models;
 using WREdit.Base.Processing;
-using WREdit.Base.Properties;
+using WREdit.Base.Processing.Properties;
 using WREdit.Common.Properties;
 
 namespace WREdit.Common
@@ -12,8 +12,8 @@ namespace WREdit.Common
         Runway, Asphalt, Gravel, Mud, None
     }
 
-    [Processor(DisplayName = "Test action 1")]
-    internal class TestProcessor : IGameObjectProcessor
+    [EntityProcessor(DisplayName = "Test action 1")]
+    internal class TestProcessor : IEntityProcessor
     {
         [Property]
         public string? TestString { get; set; }
@@ -33,7 +33,7 @@ namespace WREdit.Common
         [Property("Wartość logiczna")]
         public bool? TestBoolean { get; set; }
 
-        public void Execute(GameObject gameObject)
+        public void Execute(Entity entity)
         {
             Console.WriteLine($"Executing {GetType().Name}:");
 

@@ -5,20 +5,20 @@ using WREdit.DataAccess;
 
 namespace WREdit.ViewModels
 {
-    internal class GameObjectListingViewModel : ViewModelBase
+    internal class EntityListingViewModel : ViewModelBase
     {
-        private readonly IGameObjectLoader _loader;
+        private readonly IEntityLoader _loader;
 
-        public ObservableCollection<GameObjectItemViewModel> GameObjects { get; } = new();
-        public ICommand AddObjectCommand { get; }
-        public ICommand RemoveObjectCommand { get; }
+        public ObservableCollection<EntityItemViewModel> Entities { get; } = new();
+        public ICommand AddEntityCommand { get; }
+        public ICommand RemoveEntityCommand { get; }
 
-        public GameObjectListingViewModel(IGameObjectLoader loader)
+        public EntityListingViewModel(IEntityLoader loader)
         {
             _loader = loader;
 
-            AddObjectCommand = new RelayCommand(Add);
-            RemoveObjectCommand = new RelayCommand(Remove, CanRemove);
+            AddEntityCommand = new RelayCommand(Add);
+            RemoveEntityCommand = new RelayCommand(Remove, CanRemove);
         }
 
         private void Add()
@@ -33,24 +33,24 @@ namespace WREdit.ViewModels
             if (fileDialog.ShowDialog() == true)
             {
                 //TODO: Validate the path (the path has to point inside the game folder or workshop folder)
-                var gameObject = _loader.Load(fileDialog.FileName);
-                GameObjects.Add(new GameObjectItemViewModel(gameObject));
+                var entity = _loader.Load(fileDialog.FileName);
+                Entities.Add(new EntityItemViewModel(entity));
             }
         }
 
         private void Remove()
         {
-            var toRemove = GameObjects.Where(go => go.IsSelected).ToArray();
+            var toRemove = Entities.Where(go => go.IsSelected).ToArray();
 
             foreach (var obj in toRemove)
             {
-                GameObjects.Remove(obj);
+                Entities.Remove(obj);
             }
         }
 
         private bool CanRemove()
         {
-            return GameObjects.Any(p => p.IsSelected);
+            return Entities.Any(p => p.IsSelected);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace WREdit.Base.Properties
+﻿namespace WREdit.Base.Processing.Properties
 {
     public interface IProcessorProperty
     {

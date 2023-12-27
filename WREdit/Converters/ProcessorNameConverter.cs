@@ -17,7 +17,7 @@ namespace WREdit.Converters
         {
             if (value is Type processorType)
             {
-                if (processorType.TryGetCustomAttribute<ProcessorAttribute>(out var attribute))
+                if (processorType.TryGetCustomAttribute<EntityProcessorAttribute>(out var attribute))
                 {
                     return attribute.DisplayName ?? processorType.Name;
                 }

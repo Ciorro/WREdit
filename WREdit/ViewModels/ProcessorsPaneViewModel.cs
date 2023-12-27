@@ -26,8 +26,8 @@ namespace WREdit.ViewModels
             get => _pluginManager.Processors;
         }
 
-        private IGameObjectProcessor? _selectedProcessor;
-        public IGameObjectProcessor? SelectedProcessor
+        private IEntityProcessor? _selectedProcessor;
+        public IEntityProcessor? SelectedProcessor
         {
             get => _selectedProcessor;
             set

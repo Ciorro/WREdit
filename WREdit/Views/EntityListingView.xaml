@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="WREdit.Views.GameObjectListingView"
+    x:Class="WREdit.Views.EntityListingView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -25,7 +25,7 @@
             <Button
                 x:Name="PrimaryAdd"
                 Padding="2,0"
-                Command="{Binding AddObjectCommand}">
+                Command="{Binding AddEntityCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image
                         Height="16"
@@ -52,7 +52,7 @@
             <Button
                 Margin="4,0,0,0"
                 Padding="2,0"
-                Command="{Binding RemoveObjectCommand}">
+                Command="{Binding RemoveEntityCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image
                         Height="16"
@@ -74,7 +74,7 @@
         <DataGrid
             Margin="0,4,0,0"
             AutoGenerateColumns="False"
-            ItemsSource="{Binding GameObjects}"
+            ItemsSource="{Binding Entities}"
             RowHeight="32">
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">

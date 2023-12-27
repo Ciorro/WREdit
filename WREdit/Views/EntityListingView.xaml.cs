@@ -4,9 +4,9 @@ using System.Windows.Controls.Primitives;
 
 namespace WREdit.Views
 {
-    public partial class GameObjectListingView : UserControl
+    public partial class EntityListingView : UserControl
     {
-        public GameObjectListingView()
+        public EntityListingView()
         {
             InitializeComponent();
         }

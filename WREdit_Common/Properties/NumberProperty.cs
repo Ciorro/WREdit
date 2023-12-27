@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using WREdit.Base.Attributes;
-using WREdit.Base.Properties;
+using WREdit.Base.Processing.Properties;
 
 namespace WREdit.Common.Properties
 {

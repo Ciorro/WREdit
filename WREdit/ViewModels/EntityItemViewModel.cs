@@ -2,14 +2,14 @@
 
 namespace WREdit.ViewModels
 {
-    internal class GameObjectItemViewModel : ViewModelBase
+    internal class EntityItemViewModel : ViewModelBase
     {
-        public GameObject GameObject { get; }
+        public Entity Entity { get; }
         public bool IsSelected { get; set; }
 
-        public GameObjectItemViewModel(GameObject gameObject)
+        public EntityItemViewModel(Entity entity)
         {
-            GameObject = gameObject;
+            Entity = entity;
 
             //var nameProperty = GameObject.Properties
             //    .Select(p => p as NameStrProperty)

@@ -1,6 +1,4 @@
-﻿using WREdit.Base.Properties;
-
-namespace WREdit.Base.Plugins
+﻿namespace WREdit.Base.Plugins
 {
     public interface IPluginManager
     {

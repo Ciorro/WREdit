@@ -1,6 +1,6 @@
 ﻿namespace WREdit.Base.Models
 {
-    public class GameObject
+    public class Entity
     {
         
     }

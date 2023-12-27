@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using WREdit.Base.Processing;
-using WREdit.Base.Properties;
+using WREdit.Base.Processing.Properties;
 
 namespace WREdit.Base.Plugins
 {
@@ -34,7 +34,7 @@ namespace WREdit.Base.Plugins
 
             return types.Where(type =>
             {
-                return type.IsAssignableTo(typeof(IGameObjectProcessor));
+                return type.IsAssignableTo(typeof(IEntityProcessor));
             });
         }
 

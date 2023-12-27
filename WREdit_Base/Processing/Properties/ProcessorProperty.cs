@@ -2,7 +2,7 @@
 using WREdit.Base.Attributes;
 using WREdit.Base.Extensions;
 
-namespace WREdit.Base.Properties
+namespace WREdit.Base.Processing.Properties
 {
     public abstract class ProcessorProperty : IProcessorProperty
     {
