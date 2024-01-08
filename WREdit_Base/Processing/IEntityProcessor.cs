@@ -1,4 +1,4 @@
-﻿using WREdit.Base.Models;
+﻿using WREdit.Base.Entities;
 using WREdit.Base.Processing.Properties;
 
 namespace WREdit.Base.Processing

@@ -1,6 +1,6 @@
 ﻿using WREdit.Base.Attributes;
+using WREdit.Base.Entities;
 using WREdit.Base.Extensions;
-using WREdit.Base.Models;
 using WREdit.Base.Processing;
 using WREdit.Base.Processing.Properties;
 using WREdit.Common.Properties;

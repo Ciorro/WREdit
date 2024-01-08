@@ -1,4 +1,4 @@
-﻿using WREdit.Base.Models;
+﻿using WREdit.Base.Entities;
 
 namespace WREdit.DataAccess
 {
@@ -11,7 +11,7 @@ namespace WREdit.DataAccess
 
 
 
-            return new Entity();
+            return new Entity("");
         }
     }
 }
