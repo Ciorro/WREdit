@@ -1,5 +1,7 @@
 ﻿using WREdit.DataAccess;
 using WREdit.Base.Plugins;
+using WREdit.Base.Processing;
+using WREdit.Base.Entities;
 
 namespace WREdit.ViewModels
 {
@@ -9,6 +11,7 @@ namespace WREdit.ViewModels
         {
             EntitiesListing = new EntityListingViewModel(new EntityLoader());
             ActionSettings = new ProcessorsPaneViewModel(new PluginManager("Plugins"));
+            ActionSettings.ProcessorExecuted += OnProcessorExecuted;
         }
 
         private EntityListingViewModel? _entitiesListing;
@@ -30,6 +33,16 @@ namespace WREdit.ViewModels
             {
                 _actionSettings = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private void OnProcessorExecuted(IEntityProcessor processor)
+        {
+            var entities = EntitiesListing?.Entities?.Select(e => e.Entity);
+
+            foreach (var entity in entities ?? Enumerable.Empty<Entity>())
+            {
+                processor.Execute(entity);
             }
         }
     }

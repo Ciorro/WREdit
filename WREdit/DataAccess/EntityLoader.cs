@@ -1,4 +1,5 @@
-﻿using WREdit.Base.Entities;
+﻿using System.IO;
+using WREdit.Base.Entities;
 
 namespace WREdit.DataAccess
 {
@@ -6,12 +7,7 @@ namespace WREdit.DataAccess
     {
         public Entity Load(string path)
         {
-
-
-
-
-
-            return new Entity("");
+            return new Entity(File.ReadAllText(path));
         }
     }
 }

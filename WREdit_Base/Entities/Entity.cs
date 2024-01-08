@@ -9,8 +9,8 @@ namespace WREdit.Base.Entities
         private readonly string _source;
 
         private int _caretPosition = 0;
-        private int _selectionStart = 0;
-        private int _selectionEnd = 0;
+        public int SelectionStart { get; private set; }
+        public int SelectionEnd { get; private set; }
 
         public Entity(string entitySource)
         {
@@ -25,8 +25,9 @@ namespace WREdit.Base.Entities
                 return null;
             }
 
+            SelectionStart = propertyIndex;
+            _caretPosition = propertyIndex;
             var property = new Property(ReadWord());
-            _selectionStart = _caretPosition;
 
             foreach (var valueDef in values)
             {
@@ -48,13 +49,15 @@ namespace WREdit.Base.Entities
                 property.AddValue(value, valueName);
             }
 
-            _selectionEnd = _caretPosition;
+            SelectionEnd = _caretPosition;
             return property;
         }
 
         private double ReadNumber()
         {
-            if (!double.TryParse(ReadWord(), CultureInfo.InvariantCulture, out var number))
+            string word = ReadWord();
+
+            if (!double.TryParse(word, CultureInfo.InvariantCulture, out var number))
             {
                 throw new Exception("Failed to read a number.");
             }
@@ -76,6 +79,9 @@ namespace WREdit.Base.Entities
                     }
                     _caretPosition++;
                 }
+
+                //Skip opening quote
+                _caretPosition++;
 
                 while (_source[_caretPosition] != '"')
                 {
@@ -100,11 +106,11 @@ namespace WREdit.Base.Entities
                 var sb = new StringBuilder();
 
                 //Skip spaces before word
-                while (_source[_caretPosition] == ' ')
+                while (char.IsWhiteSpace(_source[_caretPosition]))
                     _caretPosition++;
 
                 //Read word
-                while (_source[_caretPosition] != ' ')
+                while (!char.IsWhiteSpace(_source[_caretPosition]))
                 {
                     sb.Append(_source[_caretPosition++]);
                 }

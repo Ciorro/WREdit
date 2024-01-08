@@ -11,11 +11,8 @@ namespace WREdit.ViewModels
         {
             Entity = entity;
 
-            //var nameProperty = GameObject.Properties
-            //    .Select(p => p as NameStrProperty)
-            //    .FirstOrDefault();
-
-            //_name = nameProperty?.ObjectName ?? "???";
+            var nameStrProperty = entity.SelectProperty("$NAME_STR", "string:name");
+            _name = nameStrProperty?.GetValue<string>("name") ?? "Unknown";
         }
 
         private string _name = "";

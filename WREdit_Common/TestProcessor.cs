@@ -1,9 +1,7 @@
 ﻿using WREdit.Base.Attributes;
 using WREdit.Base.Entities;
-using WREdit.Base.Extensions;
 using WREdit.Base.Processing;
 using WREdit.Base.Processing.Properties;
-using WREdit.Common.Properties;
 
 namespace WREdit.Common
 {
@@ -35,14 +33,20 @@ namespace WREdit.Common
 
         public void Execute(Entity entity)
         {
-            Console.WriteLine($"Executing {GetType().Name}:");
+            //Console.WriteLine($"Executing {GetType().Name}:");
 
-            foreach (var property in GetType().GetProperties())
+            //foreach (var property in GetType().GetProperties())
+            //{
+            //    if (property.HasAttribute<PropertyAttribute>())
+            //    {
+            //        Console.WriteLine($"{property.Name}: {property.GetValue(this)}");
+            //    }
+            //}
+
+            for (int i = 0; i < 10; i++)
             {
-                if (property.HasAttribute<PropertyAttribute>())
-                {
-                    Console.WriteLine($"{property.Name}: {property.GetValue(this)}");
-                }
+                entity.SelectProperty("$CONNECTION_ROAD_DEAD", "number", "number", "number");
+                Console.WriteLine($"Start: {entity.SelectionStart}, End: {entity.SelectionEnd}");
             }
         }
 

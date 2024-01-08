@@ -8,6 +8,7 @@ namespace WREdit.ViewModels
     {
         private readonly IPluginManager _pluginManager;
 
+        public event Action<IEntityProcessor>? ProcessorExecuted;
         public ICommand ExecuteCommand { get; }
 
         public ProcessorsPaneViewModel(IPluginManager pluginManager)
@@ -16,7 +17,7 @@ namespace WREdit.ViewModels
             _pluginManager.InitializePlugins();
 
             ExecuteCommand = new RelayCommand(
-                execute: () => SelectedProcessor?.Execute(null),
+                execute: () => ProcessorExecuted?.Invoke(SelectedProcessor!),
                 canExecute: () => SelectedProcessor is not null
             );
         }

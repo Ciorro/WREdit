@@ -17,7 +17,7 @@
 
         public object this[string name]
         {
-            get => _values.First(v => v.Item2 == name);
+            get => _values.First(v => v.Item2 == name).Item1;
         }
 
         public void AddValue(object value, string? name = null)
@@ -30,12 +30,12 @@
             }
         }
 
-        public T GetValue<T>(int index) where T : IParsable<T>
+        public T GetValue<T>(int index)
         {
             return (T)this[index];
         }
 
-        public T GetValue<T>(string name) where T : IParsable<T>
+        public T GetValue<T>(string name)
         {
             return (T)this[name];
         }
