@@ -4,6 +4,6 @@ namespace WREdit.DataAccess
 {
     internal interface IEntityLoader
     {
-        Entity Load(string path);
+        IEntity Load(string path);
     }
 }

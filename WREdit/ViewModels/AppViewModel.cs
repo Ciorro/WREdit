@@ -40,7 +40,7 @@ namespace WREdit.ViewModels
         {
             var entities = EntitiesListing?.Entities?.Select(e => e.Entity);
 
-            foreach (var entity in entities ?? Enumerable.Empty<Entity>())
+            foreach (var entity in entities ?? Enumerable.Empty<IEntity>())
             {
                 processor.Execute(entity);
             }

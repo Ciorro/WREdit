@@ -1,5 +1,6 @@
 ﻿using WREdit.Base.Attributes;
 using WREdit.Base.Entities;
+using WREdit.Base.Extensions;
 using WREdit.Base.Processing;
 using WREdit.Base.Processing.Properties;
 
@@ -31,22 +32,30 @@ namespace WREdit.Common
         [Property("Wartość logiczna")]
         public bool? TestBoolean { get; set; }
 
-        public void Execute(Entity entity)
+        public void Execute(IEntity entity)
         {
-            //Console.WriteLine($"Executing {GetType().Name}:");
+            Console.WriteLine($"Executing {GetType().Name}:");
 
-            //foreach (var property in GetType().GetProperties())
-            //{
-            //    if (property.HasAttribute<PropertyAttribute>())
-            //    {
-            //        Console.WriteLine($"{property.Name}: {property.GetValue(this)}");
-            //    }
-            //}
+            foreach (var property in GetType().GetProperties())
+            {
+                if (property.HasAttribute<PropertyAttribute>())
+                {
+                    Console.WriteLine($"{property.Name}: {property.GetValue(this)}");
+                }
+            }
+
+            Console.WriteLine("=================\n");
+            Console.WriteLine("Inspecting entity: ");
 
             for (int i = 0; i < 10; i++)
             {
-                entity.SelectProperty("$CONNECTION_ROAD_DEAD", "number", "number", "number");
-                Console.WriteLine($"Start: {entity.SelectionStart}, End: {entity.SelectionEnd}");
+                var p = entity.SelectNextProperty("$CONNECTION_ROAD_DEAD number number number");
+                Console.WriteLine($"Start: {entity.Selection.Start}, Length: {entity.Selection.End}");
+
+                for (int j = 0; j < p?.ValueCount; j++)
+                {
+                    Console.WriteLine($"[{j}] = {p[j]}");
+                }
             }
         }
 

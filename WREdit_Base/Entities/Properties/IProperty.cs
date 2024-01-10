@@ -1,8 +1,9 @@
 ﻿namespace WREdit.Base.Entities.Properties
 {
-    public interface IReadonlyProperty
+    public interface IProperty
     {
         string Name { get; }
+        int ValueCount { get; }
 
         object this[int index] { get; }
         object this[string name] { get; }

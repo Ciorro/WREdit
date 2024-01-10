@@ -5,7 +5,7 @@ namespace WREdit.Base.Processing
 {
     public interface IEntityProcessor
     {
-        void Execute(Entity entity);
+        void Execute(IEntity entity);
         void RegisterProperties(ICollection<IProcessorProperty> properties);
     }
 }

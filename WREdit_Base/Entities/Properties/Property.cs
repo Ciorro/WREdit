@@ -1,6 +1,6 @@
 ﻿namespace WREdit.Base.Entities.Properties
 {
-    public class Property : IReadonlyProperty
+    public class Property : IProperty
     {
         private readonly List<(object, string)> _values = new();
         public string Name { get; }
@@ -9,6 +9,8 @@
         {
             Name = name;
         }
+
+        public int ValueCount => _values.Count;
 
         public object this[int index]
         {

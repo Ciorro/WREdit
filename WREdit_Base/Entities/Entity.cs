@@ -4,122 +4,145 @@ using WREdit.Base.Entities.Properties;
 
 namespace WREdit.Base.Entities
 {
-    public class Entity
+    public class Entity : IEntity
     {
-        private readonly string _source;
+        public string Source { get; private set; }
+        public Range Selection { get; private set; }
 
-        private int _caretPosition = 0;
-        public int SelectionStart { get; private set; }
-        public int SelectionEnd { get; private set; }
-
-        public Entity(string entitySource)
+        public Entity(string source)
         {
-            _source = entitySource;
+            Source = source;
         }
 
-        public IReadonlyProperty? SelectProperty(string propertyName, params string[] values)
+        public void Prepend(string property)
         {
-            int propertyIndex = _source.IndexOf(propertyName, _caretPosition);
+            int index = Selection.Start.GetOffset(Source.Length);
+            Insert(index, property);
+        }
+
+        public void Append(string property)
+        {
+            int index = Selection.End.GetOffset(Source.Length);
+            Insert(index, property);
+        }
+
+        public void RemoveSelection()
+        {
+            if (Selection.Equals(default))
+            {
+                return;
+            }
+
+            (int start, int length) = Selection.GetOffsetAndLength(Source.Length);
+
+            Source = Source.Remove(start, length);
+            Selection = new Range(start, start);
+        }
+
+        public IProperty? SelectNextProperty(PropertyFormat format)
+        {
+            int startIndex = Selection.End.GetOffset(Source.Length);
+
+            int propertyIndex = Source.IndexOf(format.PropertyName, startIndex);
             if (propertyIndex == -1)
             {
-                return null;
+                propertyIndex = Source.IndexOf(format.PropertyName);
+                if (propertyIndex == -1)
+                {
+                    return null;
+                }
             }
 
-            SelectionStart = propertyIndex;
-            _caretPosition = propertyIndex;
-            var property = new Property(ReadWord());
+            int caret = propertyIndex;
 
-            foreach (var valueDef in values)
+            var propertyName = ReadWordAs<string>(ref caret);
+            var property = new Property(propertyName);
+
+            foreach (var valueDef in format.ValueFormats)
             {
-                string[] valueInfo = valueDef.Split(':');
-
-                if (valueInfo.Length < 1 || valueInfo.Length > 2)
-                    throw new Exception($"Invalid value definition: {valueDef}.");
-
-                string valueType = valueInfo.ElementAtOrDefault(0)!;
-                string? valueName = valueInfo.ElementAtOrDefault(1);
-
-                object value = valueType switch
+                object value = valueDef.Type switch
                 {
-                    "string" => ReadString(),
-                    "number" => ReadNumber(),
-                    _ => ReadWord()
+                    "string" => ReadString(ref caret),
+                    "number" => ReadWordAs<float>(ref caret),
+                    _ => ReadWordAs<string>(ref caret)
                 };
 
-                property.AddValue(value, valueName);
+                property.AddValue(value, valueDef.Name);
             }
 
-            SelectionEnd = _caretPosition;
+            Selection = new Range(propertyIndex, caret);
             return property;
         }
 
-        private double ReadNumber()
+        private void Insert(int index, string property)
         {
-            string word = ReadWord();
-
-            if (!double.TryParse(word, CultureInfo.InvariantCulture, out var number))
+            //Add new line to the property if it lacks it.
+            if (!(property.EndsWith('\n') || property.EndsWith("\r\n")))
             {
-                throw new Exception("Failed to read a number.");
+                property = property + '\n';
             }
 
-            return number;
+            Source = Source.Insert(index, property);
+
+            index = index + property.Length;
+            Selection = new Range(index, index);
         }
 
-        private string ReadString()
-        {
-            try
-            {
-                var sb = new StringBuilder();
-
-                while (_source[_caretPosition] != '"')
-                {
-                    if (!char.IsWhiteSpace(_source[_caretPosition]))
-                    {
-                        throw new Exception("Failed to read a string");
-                    }
-                    _caretPosition++;
-                }
-
-                //Skip opening quote
-                _caretPosition++;
-
-                while (_source[_caretPosition] != '"')
-                {
-                    sb.Append(_source[_caretPosition++]);
-                }
-
-                //Skip closing quote
-                _caretPosition++;
-
-                return sb.ToString();
-            }
-            catch (IndexOutOfRangeException)
-            {
-                throw new Exception("Failed to read a string.");
-            }
-        }
-
-        private string ReadWord()
+        private T ReadWordAs<T>(ref int caret) where T : IParsable<T>
         {
             try
             {
                 var sb = new StringBuilder();
 
                 //Skip spaces before word
-                while (char.IsWhiteSpace(_source[_caretPosition]))
-                    _caretPosition++;
+                while (char.IsWhiteSpace(Source[caret]))
+                    caret++;
 
                 //Read word
-                while (!char.IsWhiteSpace(_source[_caretPosition]))
+                while (!char.IsWhiteSpace(Source[caret]))
                 {
-                    sb.Append(_source[_caretPosition++]);
+                    sb.Append(Source[caret++]);
                 }
+
+                return T.Parse(sb.ToString(), CultureInfo.InvariantCulture);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                throw new Exception("Failed to read a word.");
+            }
+        }
+
+        private string ReadString(ref int caret)
+        {
+            try
+            {
+                var sb = new StringBuilder();
+
+                while (Source[caret] != '"')
+                {
+                    if (!char.IsWhiteSpace(Source[caret]))
+                    {
+                        throw new Exception("Failed to read a string");
+                    }
+                    caret++;
+                }
+
+                //Skip opening quote
+                caret++;
+
+                while (Source[caret] != '"')
+                {
+                    sb.Append(Source[caret++]);
+                }
+
+                //Skip closing quote
+                caret++;
 
                 return sb.ToString();
             }
             catch (IndexOutOfRangeException)
             {
-                throw new Exception("Failed to read a word.");
+                throw new Exception("Failed to read a string.");
             }
         }
     }
