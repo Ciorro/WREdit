@@ -33,8 +33,7 @@ namespace WREdit.ViewModels
             if (fileDialog.ShowDialog() == true)
             {
                 //TODO: Validate the path (the path has to point inside the game folder or workshop folder)
-                var entity = _loader.Load(fileDialog.FileName);
-                Entities.Add(new EntityItemViewModel(entity));
+                Entities.Add(_loader.Load(fileDialog.FileName));
             }
         }
 
