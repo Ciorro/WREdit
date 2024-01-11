@@ -32,7 +32,7 @@
 
         <Border
             Grid.Row="1"
-            Margin="0,4"
+            Margin="0,4,0,0"
             Background="#F0F0F0"
             BorderBrush="#688CAF"
             BorderThickness="1"
@@ -41,35 +41,5 @@
                 <ContentControl Content="{Binding ProcessorProperties}" />
             </ScrollViewer>
         </Border>
-
-        <DockPanel Grid.Row="2">
-            <Button
-                Height="22"
-                Margin="0,0,4,0"
-                Padding="6,0"
-                Command="{Binding UndoCommand}"
-                DockPanel.Dock="Left">
-                <StackPanel Orientation="Horizontal">
-                    <Image
-                        Height="16"
-                        Margin="0,0,2,0"
-                        Source="/Resources/arrow-curve-180-left.png" />
-                    <TextBlock VerticalAlignment="Center" Text="Undo" />
-                </StackPanel>
-            </Button>
-            <Button
-                Height="22"
-                Padding="6,0"
-                Command="{Binding ExecuteCommand}"
-                DockPanel.Dock="Right">
-                <StackPanel Orientation="Horizontal">
-                    <Image
-                        Height="16"
-                        Margin="0,0,2,0"
-                        Source="/Resources/tick-circle.png" />
-                    <TextBlock VerticalAlignment="Center" Text="Apply" />
-                </StackPanel>
-            </Button>
-        </DockPanel>
     </Grid>
 </UserControl>

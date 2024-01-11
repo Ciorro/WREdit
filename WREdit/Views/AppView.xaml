@@ -26,18 +26,51 @@
             Grid.Row="0"
             Grid.Column="2"
             Margin="0,4,4,4"
-            Content="{Binding ActionSettings}" />
+            Content="{Binding ProcessorSettings}" />
         <StatusBar
             Grid.Row="1"
             Grid.Column="0"
-            Grid.ColumnSpan="3"
-            Height="25" />
+            Grid.ColumnSpan="3">
+            <StatusBarItem DockPanel.Dock="Right">
+                <Button
+                    Height="22"
+                    Padding="6,0"
+                    Command="{Binding ExecuteProcessorCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image
+                            Height="16"
+                            Margin="0,0,2,0"
+                            Source="/Resources/tick-circle.png" />
+                        <TextBlock VerticalAlignment="Center" Text="Apply" />
+                    </StackPanel>
+                </Button>
+            </StatusBarItem>
+            <StatusBarItem DockPanel.Dock="Right">
+                <Button
+                    Height="22"
+                    Command="{Binding UndoCommand}"
+                    DockPanel.Dock="Right">
+                    <Image
+                        Height="16"
+                        Margin="2"
+                        Source="/Resources/arrow-curve-180-left.png" />
+                </Button>
+            </StatusBarItem>
+            <StatusBarItem HorizontalContentAlignment="Stretch">
+                <Grid>
+                    <ProgressBar Height="22" HorizontalAlignment="Stretch" />
+                    <TextBlock
+                        Margin="4,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="" />
+                </Grid>
+            </StatusBarItem>
+        </StatusBar>
         <GridSplitter
             Grid.Row="0"
             Grid.Column="1"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Background="Transparent" />
-
     </Grid>
 </UserControl>

@@ -1,27 +1,24 @@
-﻿using Microsoft.Win32;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using WREdit.DataAccess;
 
 namespace WREdit.ViewModels
 {
-    internal class EntityListingViewModel : ViewModelBase
+    internal partial class EntityListingViewModel : ObservableObject
     {
         private readonly IEntityLoader _loader;
-
         public ObservableCollection<EntityItemViewModel> Entities { get; } = new();
-        public ICommand AddEntityCommand { get; }
-        public ICommand RemoveEntityCommand { get; }
 
         public EntityListingViewModel(IEntityLoader loader)
         {
             _loader = loader;
-
-            AddEntityCommand = new RelayCommand(Add);
-            RemoveEntityCommand = new RelayCommand(Remove, CanRemove);
         }
 
-        private void Add()
+        [RelayCommand]
+        private void AddEntity()
         {
             var fileDialog = new OpenFileDialog
             {
@@ -41,7 +38,8 @@ namespace WREdit.ViewModels
             }
         }
 
-        private void Remove()
+        [RelayCommand(CanExecute = nameof(CanRemoveEntity))]
+        private void RemoveEntity()
         {
             var toRemove = Entities.Where(go => go.IsSelected).ToArray();
 
@@ -51,9 +49,15 @@ namespace WREdit.ViewModels
             }
         }
 
-        private bool CanRemove()
+        private bool CanRemoveEntity()
         {
             return Entities.Any(p => p.IsSelected);
+        }
+
+        [RelayCommand]
+        private void SelectionChanged()
+        {
+            RemoveEntityCommand.NotifyCanExecuteChanged();
         }
     }
 }

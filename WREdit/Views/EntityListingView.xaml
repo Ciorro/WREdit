@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WREdit.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -71,7 +72,7 @@
                 DockPanel.Dock="Right"
                 Text="Filter:" />
         </DockPanel>
-        <DataGrid
+        <DataGrid ScrollViewer.CanContentScroll="False"
             Margin="0,4,0,0"
             AutoGenerateColumns="False"
             ItemsSource="{Binding Entities}"
@@ -107,6 +108,11 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
             </DataGrid.Columns>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </DataGrid>
     </DockPanel>
 </UserControl>

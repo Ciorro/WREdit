@@ -1,49 +1,68 @@
-﻿using WREdit.DataAccess;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System.Windows;
 using WREdit.Base.Plugins;
-using WREdit.Base.Processing;
-using WREdit.Base.Entities;
+using WREdit.DataAccess;
 
 namespace WREdit.ViewModels
 {
-    internal class AppViewModel : ViewModelBase
+    internal partial class AppViewModel : ObservableObject
     {
         public AppViewModel()
         {
             EntitiesListing = new EntityListingViewModel(new EntityLoader());
-            ActionSettings = new ProcessorsPaneViewModel(new PluginManager("Plugins"));
-            ActionSettings.ProcessorExecuted += OnProcessorExecuted;
+            ProcessorSettings = new ProcessorsPaneViewModel(new PluginManager("Plugins"));
+            ProcessorSettings.PropertyChanged += (_, _) =>
+            {
+                ExecuteProcessorCommand.NotifyCanExecuteChanged();
+            };
         }
 
+        [ObservableProperty]
         private EntityListingViewModel? _entitiesListing;
-        public EntityListingViewModel? EntitiesListing
+
+        [ObservableProperty]
+        private ProcessorsPaneViewModel? _processorSettings;
+
+        [RelayCommand(CanExecute = nameof(CanExecuteProcessor))]
+        private void ExecuteProcessor()
         {
-            get => _entitiesListing;
-            set
+            var entities = EntitiesListing?.Entities;
+
+            foreach (var entityItem in entities)
             {
-                _entitiesListing = value;
-                OnPropertyChanged();
+                var entity = entityItem.Entity;
+
+                try
+                {
+                    ProcessorSettings?.SelectedProcessor?.Execute(entity);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(
+                        e.Message,
+                        entityItem.Name,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Asterisk
+                    );
+                }
             }
         }
 
-        private ProcessorsPaneViewModel? _actionSettings;
-        public ProcessorsPaneViewModel? ActionSettings
+        private bool CanExecuteProcessor()
         {
-            get => _actionSettings;
-            set
-            {
-                _actionSettings = value;
-                OnPropertyChanged();
-            }
+            return ProcessorSettings?.SelectedProcessor is not null;
         }
 
-        private void OnProcessorExecuted(IEntityProcessor processor)
+        [RelayCommand(CanExecute = nameof(CanUndo))]
+        private void Undo()
         {
-            var entities = EntitiesListing?.Entities?.Select(e => e.Entity);
+            //TODO: Undo
+        }
 
-            foreach (var entity in entities ?? Enumerable.Empty<IEntity>())
-            {
-                processor.Execute(entity);
-            }
+        private bool CanUndo()
+        {
+            return false;
         }
     }
 }

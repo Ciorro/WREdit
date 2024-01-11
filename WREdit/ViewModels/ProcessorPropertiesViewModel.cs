@@ -8,7 +8,7 @@ using WREdit.Base.Processing.Properties;
 
 namespace WREdit.ViewModels
 {
-    internal class ProcessorPropertiesViewModel : ViewModelBase
+    internal class ProcessorPropertiesViewModel
     {
         public ObservableCollection<IProcessorProperty> Properties { get; } = new();
 

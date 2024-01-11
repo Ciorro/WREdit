@@ -1,9 +1,10 @@
-﻿using System.IO;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.IO;
 using WREdit.Base.Entities;
 
 namespace WREdit.ViewModels
 {
-    internal class EntityItemViewModel : ViewModelBase
+    internal class EntityItemViewModel : ObservableObject
     {
         public IEntity Entity { get; }
         public string EntityPath { get; }
