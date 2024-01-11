@@ -23,9 +23,7 @@ namespace WREdit.ViewModels
             var fileDialog = new OpenFileDialog
             {
                 Filter = "*.ini (Ini files)|*.ini",
-                Multiselect = true,
-                //TODO: Remove:
-                InitialDirectory = "E:\\Gry\\steamapps\\workshop\\content\\784150"
+                Multiselect = true
             };
 
             if (fileDialog.ShowDialog() == true)

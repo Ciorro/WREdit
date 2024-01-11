@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.IO;
 using System.Windows;
 using WREdit.Base.Plugins;
 using WREdit.DataAccess;
@@ -19,34 +20,35 @@ namespace WREdit.ViewModels
         }
 
         [ObservableProperty]
-        private EntityListingViewModel? _entitiesListing;
+        private float _processingProgress;
 
         [ObservableProperty]
-        private ProcessorsPaneViewModel? _processorSettings;
+        private string _processedFile;
+
+        [ObservableProperty]
+        private EntityListingViewModel _entitiesListing;
+
+        [ObservableProperty]
+        private ProcessorsPaneViewModel _processorSettings;
 
         [RelayCommand(CanExecute = nameof(CanExecuteProcessor))]
-        private void ExecuteProcessor()
+        private async Task ExecuteProcessor(CancellationToken token)
         {
-            var entities = EntitiesListing?.Entities;
+            var entities = EntitiesListing.Entities.Select(e => e.Entity).ToList();
 
-            foreach (var entityItem in entities)
+            await Task.Run(() =>
             {
-                var entity = entityItem.Entity;
+                for (int i = 0; i < entities.Count; i++)
+                {
+                    ProcessedFile = entities[i].FileName;
+                    ProcessorSettings.SelectedProcessor?.Execute(entities[i]);
+                    File.WriteAllText(entities[i].FileName, entities[i].Content);
+                    ProcessingProgress = (float)i / entities.Count;
+                }
+            });
 
-                try
-                {
-                    ProcessorSettings?.SelectedProcessor?.Execute(entity);
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(
-                        e.Message,
-                        entityItem.Name,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Asterisk
-                    );
-                }
-            }
+            ProcessedFile = "";
+            ProcessingProgress = 0;
         }
 
         private bool CanExecuteProcessor()

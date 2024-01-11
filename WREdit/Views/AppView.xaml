@@ -58,11 +58,16 @@
             </StatusBarItem>
             <StatusBarItem HorizontalContentAlignment="Stretch">
                 <Grid>
-                    <ProgressBar Height="22" HorizontalAlignment="Stretch" />
+                    <ProgressBar
+                        Height="22"
+                        HorizontalAlignment="Stretch"
+                        Maximum="1"
+                        Minimum="0"
+                        Value="{Binding ProcessingProgress}" />
                     <TextBlock
                         Margin="4,0,0,0"
                         VerticalAlignment="Center"
-                        Text="" />
+                        Text="{Binding ProcessedFile}" />
                 </Grid>
             </StatusBarItem>
         </StatusBar>

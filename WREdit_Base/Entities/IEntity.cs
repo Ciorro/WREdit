@@ -4,7 +4,8 @@ namespace WREdit.Base.Entities
 {
     public interface IEntity
     {
-        string Source { get; }
+        string FileName { get; }
+        string Content { get; }
         Range Selection { get; }
 
         void RemoveSelection();

@@ -6,23 +6,30 @@ namespace WREdit.Base.Entities
 {
     public class Entity : IEntity
     {
-        public string Source { get; private set; }
+        public string FileName { get; }
+        public string Content { get; private set; }
         public Range Selection { get; private set; }
 
-        public Entity(string source)
+        private Entity(string content, string fileName)
         {
-            Source = source;
+            Content = content;
+            FileName = fileName;
+        }
+
+        public static Entity FromFile(string fileName)
+        {
+            return new Entity(File.ReadAllText(fileName), fileName);
         }
 
         public void Prepend(string property)
         {
-            int index = Selection.Start.GetOffset(Source.Length);
+            int index = Selection.Start.GetOffset(Content.Length);
             Insert(index, property);
         }
 
         public void Append(string property)
         {
-            int index = Selection.End.GetOffset(Source.Length);
+            int index = Selection.End.GetOffset(Content.Length);
             Insert(index, property);
         }
 
@@ -33,16 +40,16 @@ namespace WREdit.Base.Entities
                 return;
             }
 
-            (int start, int length) = Selection.GetOffsetAndLength(Source.Length);
+            (int start, int length) = Selection.GetOffsetAndLength(Content.Length);
 
-            Source = Source.Remove(start, length);
+            Content = Content.Remove(start, length);
             Selection = new Range(start, start);
         }
 
         public IProperty? SelectNextProperty(PropertyFormat format)
         {
             var regex = new Regex(format.ToRegexString());
-            var match = FindClosestMatch(regex.Matches(Source));
+            var match = FindClosestMatch(regex.Matches(Content));
 
             if (match is null)
             {
@@ -77,7 +84,7 @@ namespace WREdit.Base.Entities
                 property = property + '\n';
             }
 
-            Source = Source.Insert(index, property);
+            Content = Content.Insert(index, property);
 
             index = index + property.Length;
             Selection = new Range(index, index);
@@ -87,7 +94,7 @@ namespace WREdit.Base.Entities
         {
             foreach (Match match in matches)
             {
-                if (match.Index >= Selection.End.GetOffset(Source.Length))
+                if (match.Index >= Selection.End.GetOffset(Content.Length))
                 {
                     return match;
                 }

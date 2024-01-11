@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.IO;
 using WREdit.Base.Entities;
 
 namespace WREdit.ViewModels
@@ -7,35 +6,22 @@ namespace WREdit.ViewModels
     internal class EntityItemViewModel : ObservableObject
     {
         public IEntity Entity { get; }
-        public string EntityPath { get; }
         public string? IconPath { get; }
+        public string? Icon { get; }
+        public string Name { get; }
 
         public bool IsSelected { get; set; }
 
         public EntityItemViewModel(string entityPath, string? iconPath = default)
         {
-            EntityPath = entityPath;
-            IconPath = iconPath;
-
-            Entity = new Entity(File.ReadAllText(entityPath));
-            _name = GetName();
+            Entity = Base.Entities.Entity.FromFile(entityPath);
+            Icon = iconPath;
+            Name = GetName();
         }
 
-        private string _name = "";
-        public string Name
+        public string EntityPath
         {
-            get => _name;
-        }
-
-        private string _icon = "";
-        public string Icon
-        {
-            get => _icon;
-            init
-            {
-                _icon = value;
-                OnPropertyChanged();
-            }
+            get => Entity.FileName;
         }
 
         private string GetName()
