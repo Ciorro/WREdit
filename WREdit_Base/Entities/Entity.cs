@@ -53,6 +53,11 @@ namespace WREdit.Base.Entities
                 }
             }
 
+            if (propertyIndex > 0 && !char.IsWhiteSpace(Source[propertyIndex - 1]))
+            {
+                return null;
+            }
+
             int caret = propertyIndex;
 
             var propertyName = ReadWordAs<string>(ref caret);
