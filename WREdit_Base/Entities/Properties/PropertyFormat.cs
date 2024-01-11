@@ -1,4 +1,6 @@
-﻿namespace WREdit.Base.Entities.Properties
+﻿using System.Text;
+
+namespace WREdit.Base.Entities.Properties
 {
     public class PropertyFormat
     {
@@ -33,6 +35,28 @@
             {
                 throw new FormatException("Invalid property format.");
             }
+        }
+
+        public string ToRegexString()
+        {
+            var sb = new StringBuilder("(?<=\\s|^)");
+            sb.Append($"\\{PropertyName}\\s+");
+
+            sb.AppendJoin("\\s+", ValueFormats.Select((vf, i) =>
+            {
+                var valueName = vf.Name ?? $"Value{i}";
+
+                var regex = vf.Type switch
+                {
+                    "number" => $"(?'{valueName}'-?\\d+(?>\\.\\d+)?)",
+                    "string" => $"\"(?'{valueName}'.*?)\"",
+                    _        => $"(?'{valueName}'[^\\s]+)"
+                };
+
+                return regex;
+            }));
+
+            return sb.ToString();
         }
 
         private bool IsValidPropertyName(string propertyName)

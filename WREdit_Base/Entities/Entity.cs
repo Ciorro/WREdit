@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using System.Text;
+﻿using System.Text.RegularExpressions;
 using WREdit.Base.Entities.Properties;
+using WREdit.Base.Extensions;
 
 namespace WREdit.Base.Entities
 {
@@ -41,41 +41,31 @@ namespace WREdit.Base.Entities
 
         public IProperty? SelectNextProperty(PropertyFormat format)
         {
-            int startIndex = Selection.End.GetOffset(Source.Length);
+            var regex = new Regex(format.ToRegexString());
+            var match = FindClosestMatch(regex.Matches(Source));
 
-            int propertyIndex = Source.IndexOf(format.PropertyName, startIndex);
-            if (propertyIndex == -1)
-            {
-                propertyIndex = Source.IndexOf(format.PropertyName);
-                if (propertyIndex == -1)
-                {
-                    return null;
-                }
-            }
-
-            if (propertyIndex > 0 && !char.IsWhiteSpace(Source[propertyIndex - 1]))
+            if (match is null)
             {
                 return null;
             }
 
-            int caret = propertyIndex;
+            var property = new Property(format.PropertyName);
 
-            var propertyName = ReadWordAs<string>(ref caret);
-            var property = new Property(propertyName);
-
-            foreach (var valueDef in format.ValueFormats)
+            for (int i = 0; i < format.ValueFormats.Count; i++)
             {
-                object value = valueDef.Type switch
+                var valueFormat = format.ValueFormats[i];
+
+                Group group = match.Groups[i + 1];
+                object value = valueFormat.Type switch
                 {
-                    "string" => ReadString(ref caret),
-                    "number" => ReadWordAs<float>(ref caret),
-                    _ => ReadWordAs<string>(ref caret)
+                    "number" => group.GetValueAs<double>(),
+                    _        => group.GetValueAs<string>()
                 };
 
-                property.AddValue(value, valueDef.Name);
+                property.AddValue(value, valueFormat.Name);
             }
 
-            Selection = new Range(propertyIndex, caret);
+            Selection = new Range(match.Index, match.Index + match.Length);
             return property;
         }
 
@@ -93,62 +83,17 @@ namespace WREdit.Base.Entities
             Selection = new Range(index, index);
         }
 
-        private T ReadWordAs<T>(ref int caret) where T : IParsable<T>
+        private Match? FindClosestMatch(MatchCollection matches)
         {
-            try
+            foreach (Match match in matches)
             {
-                var sb = new StringBuilder();
-
-                //Skip spaces before word
-                while (char.IsWhiteSpace(Source[caret]))
-                    caret++;
-
-                //Read word
-                while (!char.IsWhiteSpace(Source[caret]))
+                if (match.Index >= Selection.End.GetOffset(Source.Length))
                 {
-                    sb.Append(Source[caret++]);
+                    return match;
                 }
-
-                return T.Parse(sb.ToString(), CultureInfo.InvariantCulture);
             }
-            catch (IndexOutOfRangeException)
-            {
-                throw new Exception("Failed to read a word.");
-            }
-        }
 
-        private string ReadString(ref int caret)
-        {
-            try
-            {
-                var sb = new StringBuilder();
-
-                while (Source[caret] != '"')
-                {
-                    if (!char.IsWhiteSpace(Source[caret]))
-                    {
-                        throw new Exception("Failed to read a string");
-                    }
-                    caret++;
-                }
-
-                //Skip opening quote
-                caret++;
-
-                while (Source[caret] != '"')
-                {
-                    sb.Append(Source[caret++]);
-                }
-
-                //Skip closing quote
-                caret++;
-
-                return sb.ToString();
-            }
-            catch (IndexOutOfRangeException)
-            {
-                throw new Exception("Failed to read a string.");
-            }
+            return matches.FirstOrDefault();
         }
     }
 }
