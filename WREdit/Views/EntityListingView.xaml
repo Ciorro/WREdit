@@ -79,6 +79,7 @@
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Setter Property="ToolTip" Value="{Binding EntityPath}" />
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
@@ -101,11 +102,10 @@
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="VerticalAlignment" Value="Center" />
-                            <Setter Property="Margin" Value="4,0,0,0"/>
+                            <Setter Property="Margin" Value="4,0,0,0" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
