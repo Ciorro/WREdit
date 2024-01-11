@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Plugins\WREdit.Common.dll" />
+    <None Remove="Resources\arrow-curve-180-left.png" />
     <None Remove="Resources\folder-plus.png" />
     <None Remove="Resources\minus-circle.png" />
     <None Remove="Resources\plus-circle.png" />
@@ -27,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\arrow-curve-180-left.png" />
     <Resource Include="Resources\folder-plus.png" />
     <Resource Include="Resources\minus-circle.png" />
     <Resource Include="Resources\plus-circle.png" />
