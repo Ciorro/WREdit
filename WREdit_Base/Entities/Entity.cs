@@ -78,10 +78,14 @@ namespace WREdit.Base.Entities
 
         private void Insert(int index, string property)
         {
-            //Add new line to the property if it lacks it.
             if (!(property.EndsWith('\n') || property.EndsWith("\r\n")))
             {
                 property = property + '\n';
+            }
+
+            if (!(property.StartsWith('\n') || property.StartsWith("\r\n")))
+            {
+                property = '\n' + property;
             }
 
             Content = Content.Insert(index, property);
