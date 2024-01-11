@@ -1,4 +1,7 @@
-﻿namespace WREdit.Base.Entities.Properties
+﻿using System;
+using System.Globalization;
+
+namespace WREdit.Base.Entities.Properties
 {
     public class Property : IProperty
     {
@@ -34,12 +37,12 @@
 
         public T GetValue<T>(int index)
         {
-            return (T)this[index];
+            return (T)Convert.ChangeType(this[index], typeof(T), CultureInfo.InvariantCulture);
         }
 
         public T GetValue<T>(string name)
         {
-            return (T)this[name];
+            return (T)Convert.ChangeType(this[name], typeof(T), CultureInfo.InvariantCulture);
         }
     }
 }
