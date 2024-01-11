@@ -26,6 +26,7 @@ namespace WREdit.ViewModels
             var fileDialog = new OpenFileDialog
             {
                 Filter = "*.ini (Ini files)|*.ini",
+                Multiselect = true,
                 //TODO: Remove:
                 InitialDirectory = "E:\\Gry\\steamapps\\workshop\\content\\784150"
             };
@@ -33,7 +34,10 @@ namespace WREdit.ViewModels
             if (fileDialog.ShowDialog() == true)
             {
                 //TODO: Validate the path (the path has to point inside the game folder or workshop folder)
-                Entities.Add(_loader.Load(fileDialog.FileName));
+                foreach (var file in fileDialog.FileNames)
+                {
+                    Entities.Add(_loader.Load(file));
+                }
             }
         }
 
