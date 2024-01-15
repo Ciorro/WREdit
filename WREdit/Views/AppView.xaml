@@ -15,10 +15,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <ContentControl
             Grid.Row="0"
+            Grid.RowSpan="2"
             Grid.Column="0"
             Margin="4,4,0,4"
             Content="{Binding EntitiesListing}" />
@@ -27,48 +29,53 @@
             Grid.Column="2"
             Margin="0,4,4,4"
             Content="{Binding ProcessorSettings}" />
-        <StatusBar
+        <DockPanel
             Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="3">
-            <StatusBarItem DockPanel.Dock="Right">
-                <Button
-                    Height="22"
-                    Padding="6,0"
-                    Command="{Binding ExecuteProcessorCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image
-                            Height="16"
-                            Margin="0,0,2,0"
-                            Source="/Resources/tick-circle.png" />
-                        <TextBlock VerticalAlignment="Center" Text="Apply" />
-                    </StackPanel>
-                </Button>
-            </StatusBarItem>
-            <StatusBarItem DockPanel.Dock="Right">
-                <Button
-                    Height="22"
-                    Command="{Binding UndoCommand}"
-                    DockPanel.Dock="Right">
+            Grid.Column="2"
+            Margin="0,0,4,4">
+            <Button
+                Command="{Binding UndoCommand}"
+                DockPanel.Dock="Left"
+                ToolTip="Revert all changes">
+                <Image
+                    Height="16"
+                    Margin="4"
+                    Source="/Resources/arrow-curve-180-left.png" />
+            </Button>
+            <Button Margin="4,0,0,0" Command="{Binding ExecuteProcessorCommand}">
+                <StackPanel Orientation="Horizontal">
                     <Image
                         Height="16"
-                        Margin="2"
-                        Source="/Resources/arrow-curve-180-left.png" />
-                </Button>
+                        Margin="0,0,2,0"
+                        Source="/Resources/tick-circle.png" />
+                    <TextBlock VerticalAlignment="Center" Text="Apply" />
+                </StackPanel>
+            </Button>
+        </DockPanel>
+        <StatusBar
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="3">
+            <StatusBarItem Width="100">
+                <TextBlock>
+                    <Run>Entities:</Run>
+                    <Run Text="0" />
+                </TextBlock>
             </StatusBarItem>
-            <StatusBarItem HorizontalContentAlignment="Stretch">
-                <Grid>
+            <Separator />
+            <StatusBarItem VerticalContentAlignment="Stretch">
+                <StackPanel Orientation="Horizontal">
                     <ProgressBar
-                        Height="22"
-                        HorizontalAlignment="Stretch"
+                        Width="100"
+                        Margin="0,0,4,0"
                         Maximum="1"
                         Minimum="0"
                         Value="{Binding ProcessingProgress}" />
-                    <TextBlock
-                        Margin="4,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding ProcessedFile}" />
-                </Grid>
+                    <TextBlock>
+                        <Run>Processing:</Run>
+                        <Run Text="{Binding ProcessedFile}" />
+                    </TextBlock>
+                </StackPanel>
             </StatusBarItem>
         </StatusBar>
         <GridSplitter
