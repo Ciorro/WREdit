@@ -8,6 +8,9 @@ namespace WREdit.Base.Entities
         string Content { get; }
         Range Selection { get; }
 
+        void Load();
+        void Save();
+
         void RemoveSelection();
         void Prepend(string property);
         void Append(string property);

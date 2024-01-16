@@ -6,19 +6,24 @@ namespace WREdit.Base.Entities
 {
     public class Entity : IEntity
     {
-        public string FileName { get; }
+        public string FileName { get; private set; }
         public string Content { get; private set; }
         public Range Selection { get; private set; }
 
-        private Entity(string content, string fileName)
+        public Entity(string fileName)
         {
-            Content = content;
             FileName = fileName;
+            Content = "";
         }
 
-        public static Entity FromFile(string fileName)
+        public void Load()
         {
-            return new Entity(File.ReadAllText(fileName), fileName);
+            Content = File.ReadAllText(FileName);
+        }
+
+        public void Save()
+        {
+            File.WriteAllText(FileName, Content);
         }
 
         public void Prepend(string property)

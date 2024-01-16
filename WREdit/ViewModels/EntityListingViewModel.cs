@@ -2,20 +2,12 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
-using WREdit.DataAccess;
 
 namespace WREdit.ViewModels
 {
     internal partial class EntityListingViewModel : ObservableObject
     {
-        private readonly IEntityLoader _loader;
         public ObservableCollection<EntityItemViewModel> Entities { get; } = new();
-
-        public EntityListingViewModel(IEntityLoader loader)
-        {
-            _loader = loader;
-        }
 
         [RelayCommand]
         private void AddEntity()
@@ -31,7 +23,7 @@ namespace WREdit.ViewModels
                 //TODO: Validate the path (the path has to point inside the game folder or workshop folder)
                 foreach (var file in fileDialog.FileNames)
                 {
-                    Entities.Add(_loader.Load(file));
+                    Entities.Add(new EntityItemViewModel(file));
                 }
             }
         }

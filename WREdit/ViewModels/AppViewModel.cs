@@ -1,26 +1,35 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.IO;
-using System.Windows;
 using WREdit.Base.Plugins;
-using WREdit.DataAccess;
+using WREdit.Base.Processing.Execution;
 
 namespace WREdit.ViewModels
 {
     internal partial class AppViewModel : ObservableObject
     {
+        private readonly ExecutionStack _executionStack = new();
+
         public AppViewModel()
         {
-            EntitiesListing = new EntityListingViewModel(new EntityLoader());
+            EntitiesListing = new EntityListingViewModel();
+
             ProcessorSettings = new ProcessorsPaneViewModel(new PluginManager("Plugins"));
             ProcessorSettings.PropertyChanged += (_, _) =>
             {
                 ExecuteProcessorCommand.NotifyCanExecuteChanged();
             };
+
+            ExecuteProcessorCommand.PropertyChanged += (_, _) =>
+            {
+                UndoCommand.NotifyCanExecuteChanged();
+            };
         }
 
         [ObservableProperty]
         private float _processingProgress;
+
+        [ObservableProperty]
+        private bool _isProgressIndeterminate;
 
         [ObservableProperty]
         private string _processedFile;
@@ -34,21 +43,19 @@ namespace WREdit.ViewModels
         [RelayCommand(CanExecute = nameof(CanExecuteProcessor))]
         private async Task ExecuteProcessor(CancellationToken token)
         {
-            var entities = EntitiesListing.Entities.Select(e => e.Entity).ToList();
+            if (ProcessorSettings.SelectedProcessor is null)
+                return;
 
-            await Task.Run(() =>
+            var processor = ProcessorSettings.SelectedProcessor!;
+            var entities = EntitiesListing.Entities.Select(e => e.Entity);
+            var progress = new Progress<ProgressReport>((report) =>
             {
-                for (int i = 0; i < entities.Count; i++)
-                {
-                    ProcessedFile = entities[i].FileName;
-                    ProcessorSettings.SelectedProcessor?.Execute(entities[i]);
-                    File.WriteAllText(entities[i].FileName, entities[i].Content);
-                    ProcessingProgress = (float)i / entities.Count;
-                }
+                ProcessedFile = report.CurrentFile;
+                ProcessingProgress = report.Progress;
             });
 
-            ProcessedFile = "";
-            ProcessingProgress = 0;
+            var execution = new ProcessExecution(processor, entities);
+            await _executionStack.Execute(execution, progress);
         }
 
         private bool CanExecuteProcessor()
@@ -57,14 +64,28 @@ namespace WREdit.ViewModels
         }
 
         [RelayCommand(CanExecute = nameof(CanUndo))]
-        private void Undo()
+        private async Task Undo()
         {
-            //TODO: Undo
+            if (_executionStack.CanUndo)
+            {
+                var progress = new Progress<ProgressReport>((report) =>
+                {
+                    ProcessedFile = report.CurrentFile;
+                    ProcessingProgress = report.Progress;
+                });
+
+                await _executionStack.Undo(progress);
+
+                foreach (var item in EntitiesListing.Entities)
+                {
+                    item.Entity.Load();
+                }
+            }
         }
 
         private bool CanUndo()
         {
-            return false;
+            return !ExecuteProcessorCommand.IsRunning && _executionStack.CanUndo;
         }
     }
 }
