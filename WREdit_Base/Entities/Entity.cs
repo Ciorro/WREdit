@@ -51,7 +51,7 @@ namespace WREdit.Base.Entities
             Selection = new Range(start, start);
         }
 
-        public IProperty? SelectNextProperty(PropertyFormat format)
+        public IProperty? SelectNextProperty(PropertyFormat format, bool peek = false)
         {
             var regex = new Regex(format.ToRegexString());
             var match = FindClosestMatch(regex.Matches(Content));
@@ -77,7 +77,11 @@ namespace WREdit.Base.Entities
                 property.AddValue(value, valueFormat.Name);
             }
 
-            Selection = new Range(match.Index, match.Index + match.Length);
+            if (!peek)
+            {
+                Selection = new Range(match.Index, match.Index + match.Length);
+            }
+
             return property;
         }
 

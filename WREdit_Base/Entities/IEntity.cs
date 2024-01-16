@@ -15,6 +15,6 @@ namespace WREdit.Base.Entities
         void Prepend(string property);
         void Append(string property);
 
-        IProperty? SelectNextProperty(PropertyFormat format);
+        IProperty? SelectNextProperty(PropertyFormat format, bool peek = false);
     }
 }
