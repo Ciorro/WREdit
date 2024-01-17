@@ -41,13 +41,33 @@ namespace WREdit.ViewModels
 
         private Type? ResolvePropertyHandlerType(Type propertyType, IPluginManager pluginManager)
         {
-            return pluginManager.Properties.Where(p =>
+            propertyType = (Nullable.GetUnderlyingType(propertyType) ?? propertyType);
+
+            //Find exact handler type
+            foreach (var handlerType in pluginManager.Properties)
             {
-                return p.GetCustomAttributes<TargetTypeAttribute>().Where(t =>
+                var targetTypesAttribute = handlerType.GetCustomAttributes<TargetTypeAttribute>();
+                var targetTypes = targetTypesAttribute.Select(attr => attr.TargetType);
+
+                if (targetTypes.Contains(propertyType))
                 {
-                    return t.TargetType == (Nullable.GetUnderlyingType(propertyType) ?? propertyType);
-                }).Any();
-            }).FirstOrDefault();
+                    return handlerType;
+                }
+            }
+
+            //Find closest handler type
+            foreach (var handlerType in pluginManager.Properties)
+            {
+                var targetTypesAttribute = handlerType.GetCustomAttributes<TargetTypeAttribute>();
+                var targetTypes = targetTypesAttribute.Select(attr => attr.TargetType);
+
+                if (targetTypes.Any(type => type.IsAssignableFrom(propertyType)))
+                {
+                    return handlerType;
+                }
+            }
+
+            return null;
         }
     }
 }
