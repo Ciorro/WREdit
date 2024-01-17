@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="EnumProperty">
+        <UniformGrid Columns="2">
+            <TextBlock Grid.Column="0" Text="{Binding Name}" />
+            <ComboBox
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center"
+                ItemsSource="{Binding PossibleValues}"
+                SelectedValue="{Binding Value}" />
+        </UniformGrid>
+    </DataTemplate>
+</ResourceDictionary>
