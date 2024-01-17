@@ -3,6 +3,7 @@
         <UniformGrid Columns="2">
             <TextBlock Grid.Column="0" Text="{Binding Name}" />
             <ComboBox
+                Padding="4,0"
                 VerticalAlignment="Stretch"
                 VerticalContentAlignment="Center"
                 ItemsSource="{Binding PossibleValues}"
