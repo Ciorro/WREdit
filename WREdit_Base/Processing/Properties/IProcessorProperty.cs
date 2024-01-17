@@ -2,7 +2,8 @@
 {
     public interface IProcessorProperty
     {
-        string Name { get; init; }
+        string Name { get; }
+        string? Help { get; }
         object? Value { get; set; }
     }
 }

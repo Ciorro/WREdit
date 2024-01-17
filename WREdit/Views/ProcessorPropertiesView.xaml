@@ -17,7 +17,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border Name="border" Padding="2">
-                        <ContentPresenter ContentTemplateSelector="{StaticResource PropertyTemplateSelector}" />
+                        <ContentPresenter ContentTemplateSelector="{StaticResource PropertyTemplateSelector}" ToolTip="{Binding Help}" />
                     </Border>
                     <DataTemplate.Triggers>
                         <Trigger Property="ItemsControl.AlternationIndex" Value="0">

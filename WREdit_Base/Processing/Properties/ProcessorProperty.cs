@@ -9,7 +9,8 @@ namespace WREdit.Base.Processing.Properties
         protected readonly object Instance;
         protected readonly PropertyInfo Property;
 
-        public string Name { get; init; }
+        public string Name { get; }
+        public string? Help { get; }
 
         public ProcessorProperty(string propertyName, object instance)
         {
@@ -25,6 +26,7 @@ namespace WREdit.Base.Processing.Properties
             if (Property.TryGetCustomAttribute<PropertyAttribute>(out var attribute))
             {
                 Name = attribute.DisplayName ?? Name;
+                Help = attribute.Help;
             }
         }
 
