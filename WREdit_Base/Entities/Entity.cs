@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 using WREdit.Base.Entities.Properties;
 using WREdit.Base.Extensions;
 
@@ -83,6 +84,11 @@ namespace WREdit.Base.Entities
             }
 
             return property;
+        }
+
+        public bool TrySelectNextProperty(PropertyFormat format, [MaybeNullWhen(false)] out IProperty property)
+        {
+            return (property = SelectNextProperty(format)) is not null;
         }
 
         private void Insert(int index, string property)

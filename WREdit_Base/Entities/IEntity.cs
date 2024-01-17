@@ -1,4 +1,5 @@
-﻿using WREdit.Base.Entities.Properties;
+﻿using System.Diagnostics.CodeAnalysis;
+using WREdit.Base.Entities.Properties;
 
 namespace WREdit.Base.Entities
 {
@@ -16,5 +17,6 @@ namespace WREdit.Base.Entities
         void Append(string property);
 
         IProperty? SelectNextProperty(PropertyFormat format, bool peek = false);
+        bool TrySelectNextProperty(PropertyFormat format, [MaybeNullWhen(false)] out IProperty property);
     }
 }
