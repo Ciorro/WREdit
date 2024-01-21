@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WREdit.Views"
+    xmlns:c="clr-namespace:WREdit.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid>
@@ -59,12 +60,12 @@
             <StatusBarItem Width="100">
                 <TextBlock>
                     <Run>Entities:</Run>
-                    <Run Text="0" />
+                    <Run Text="{Binding EntitiesListing.Entities.Count, Mode=OneWay}" />
                 </TextBlock>
             </StatusBarItem>
             <Separator />
             <StatusBarItem VerticalContentAlignment="Stretch">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding ProcessedFile, Converter={c:ObjectToVisibilityConverter}}">
                     <ProgressBar
                         Width="100"
                         Margin="0,0,4,0"
