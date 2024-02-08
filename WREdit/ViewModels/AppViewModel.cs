@@ -26,13 +26,7 @@ namespace WREdit.ViewModels
         }
 
         [ObservableProperty]
-        private float _processingProgress;
-
-        [ObservableProperty]
-        private bool _isProgressIndeterminate;
-
-        [ObservableProperty]
-        private string _processedFile;
+        private ProgressReport _progressReport;
 
         [ObservableProperty]
         private EntityListingViewModel _entitiesListing;
@@ -50,8 +44,7 @@ namespace WREdit.ViewModels
             var entities = EntitiesListing.Entities.Select(e => e.Entity);
             var progress = new Progress<ProgressReport>((report) =>
             {
-                ProcessedFile = report.CurrentFile;
-                ProcessingProgress = report.Progress;
+                ProgressReport = report;
             });
 
             var execution = new ProcessExecution(processor, entities);
@@ -70,12 +63,12 @@ namespace WREdit.ViewModels
             {
                 var progress = new Progress<ProgressReport>((report) =>
                 {
-                    ProcessedFile = report.CurrentFile;
-                    ProcessingProgress = report.Progress;
+                    ProgressReport = report;
                 });
 
                 await _executionStack.Undo(progress);
 
+                //Reload entities
                 foreach (var item in EntitiesListing.Entities)
                 {
                     item.Entity.Load();

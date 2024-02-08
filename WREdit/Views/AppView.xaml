@@ -65,16 +65,16 @@
             </StatusBarItem>
             <Separator />
             <StatusBarItem VerticalContentAlignment="Stretch">
-                <StackPanel Orientation="Horizontal" Visibility="{Binding ProcessedFile, Converter={c:ObjectToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding ProgressReport.CurrentFile, Converter={c:ObjectToVisibilityConverter}}">
                     <ProgressBar
                         Width="100"
                         Margin="0,0,4,0"
                         Maximum="1"
                         Minimum="0"
-                        Value="{Binding ProcessingProgress}" />
+                        Value="{Binding ProgressReport.Progress}" />
                     <TextBlock>
                         <Run>Processing:</Run>
-                        <Run Text="{Binding ProcessedFile}" />
+                        <Run Text="{Binding ProgressReport.CurrentFile}" />
                     </TextBlock>
                 </StackPanel>
             </StatusBarItem>
