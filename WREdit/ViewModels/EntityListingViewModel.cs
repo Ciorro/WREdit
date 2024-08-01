@@ -4,10 +4,12 @@ using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Data;
 using WREdit.Base.Entities;
 using WREdit.Base.Translation;
+using static System.Net.WebRequestMethods;
 
 namespace WREdit.ViewModels
 {
@@ -15,6 +17,7 @@ namespace WREdit.ViewModels
     {
         private readonly ITranslationProvider _translationProvider;
         private readonly ObservableCollection<EntityItemViewModel> _entities = new();
+        private readonly Regex _filterRegex;
 
         [ObservableProperty]
         private ICollectionView? _entitiesView;
@@ -22,6 +25,7 @@ namespace WREdit.ViewModels
         public EntityListingViewModel(ITranslationProvider translationProvider)
         {
             _translationProvider = translationProvider;
+            _filterRegex = new Regex("^\\${1}(?'verb'[^\\s]+)\\s(?'args'.+)");
             EntitiesView = CollectionViewSource.GetDefaultView(_entities);
         }
 
@@ -34,7 +38,19 @@ namespace WREdit.ViewModels
         {
             set
             {
-                EntitiesView!.Filter = GetEntityFilter(value ?? "");
+                if (_filterRegex.IsMatch(value))
+                {
+                    var match = _filterRegex.Match(value);
+
+                    EntitiesView!.Filter = GetParametrizedEntityFilter(
+                        verb: match.Groups["verb"].ToString(),
+                        args: match.Groups["args"].ToString()
+                    );
+                }
+                else
+                {
+                    EntitiesView!.Filter = GetBasicEntityFilter(value ?? "");
+                }
             }
         }
 
@@ -114,12 +130,31 @@ namespace WREdit.ViewModels
             }
         }
 
-        private Predicate<object> GetEntityFilter(string filter)
+        private Predicate<object> GetBasicEntityFilter(string filter)
         {
             return (obj) =>
             {
-                var entity = (obj as EntityItemViewModel)!;
-                return entity.Name.Contains(filter, StringComparison.InvariantCultureIgnoreCase);
+                if (obj is EntityItemViewModel entity)
+                {
+                    return entity.Name.Contains(filter, StringComparison.InvariantCultureIgnoreCase);
+                }
+                return false;
+            };
+        }
+
+        private Predicate<object> GetParametrizedEntityFilter(string verb, string args)
+        {
+            return (obj) =>
+            {
+                if (obj is EntityItemViewModel entity)
+                {
+                    switch(verb.ToLower())
+                    {
+                        case "type":
+                            return entity.Entity.TrySelectNextProperty(args, out _);
+                    }
+                }
+                return false;
             };
         }
     }
