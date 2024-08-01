@@ -65,7 +65,8 @@
             <TextBox
                 Width="150"
                 VerticalContentAlignment="Center"
-                DockPanel.Dock="Right" />
+                DockPanel.Dock="Right"
+                Text="{Binding EntityFilter, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, Delay=1000}" />
             <TextBlock
                 Margin="4,0"
                 VerticalAlignment="Center"
@@ -75,7 +76,7 @@
         <DataGrid
             Margin="0,4,0,0"
             AutoGenerateColumns="False"
-            ItemsSource="{Binding Entities}"
+            ItemsSource="{Binding EntitiesView}"
             RowHeight="32"
             ScrollViewer.CanContentScroll="False">
             <DataGrid.RowStyle>

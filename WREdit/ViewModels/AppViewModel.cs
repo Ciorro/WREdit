@@ -47,7 +47,7 @@ namespace WREdit.ViewModels
                 return;
 
             var processor = ProcessorSettings.SelectedProcessor!;
-            var entities = EntitiesListing.Entities.Select(e => e.Entity);
+            var entities = EntitiesListing.Entities;
             var progress = new Progress<ProgressReport>((report) =>
             {
                 ProgressReport = report;
@@ -77,7 +77,7 @@ namespace WREdit.ViewModels
                 //Reload entities
                 foreach (var item in EntitiesListing.Entities)
                 {
-                    item.Entity.Load();
+                    item.Load();
                 }
             }
         }

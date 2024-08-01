@@ -2,8 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Data;
 using WREdit.Base.Entities;
 using WREdit.Base.Translation;
 
@@ -12,11 +14,28 @@ namespace WREdit.ViewModels
     internal partial class EntityListingViewModel : ObservableObject
     {
         private readonly ITranslationProvider _translationProvider;
-        public ObservableCollection<EntityItemViewModel> Entities { get; } = new();
+        private readonly ObservableCollection<EntityItemViewModel> _entities = new();
+
+        [ObservableProperty]
+        private ICollectionView? _entitiesView;
 
         public EntityListingViewModel(ITranslationProvider translationProvider)
         {
             _translationProvider = translationProvider;
+            EntitiesView = CollectionViewSource.GetDefaultView(_entities);
+        }
+
+        public IEnumerable<IEntity> Entities
+        {
+            get => _entities.Select(e => e.Entity);
+        }
+
+        public string EntityFilter
+        {
+            set
+            {
+                EntitiesView!.Filter = GetEntityFilter(value ?? "");
+            }
         }
 
         [RelayCommand]
@@ -37,17 +56,17 @@ namespace WREdit.ViewModels
         [RelayCommand(CanExecute = nameof(CanRemoveEntity))]
         private void RemoveEntity()
         {
-            var toRemove = Entities.Where(go => go.IsSelected).ToArray();
+            var toRemove = _entities.Where(go => go.IsSelected).ToArray();
 
             foreach (var obj in toRemove)
             {
-                Entities.Remove(obj);
+                _entities.Remove(obj);
             }
         }
 
         private bool CanRemoveEntity()
         {
-            return Entities.Any(p => p.IsSelected);
+            return _entities.Any(p => p.IsSelected);
         }
 
         [RelayCommand]
@@ -67,7 +86,7 @@ namespace WREdit.ViewModels
                     var entityScript = new Entity(file);
                     entityScript.Load();
 
-                    Entities.Add(new EntityItemViewModel(entityScript, _translationProvider));
+                    _entities.Add(new EntityItemViewModel(entityScript, _translationProvider));
                 }
                 catch (InvalidDataException)
                 {
@@ -84,6 +103,15 @@ namespace WREdit.ViewModels
                     MessageBoxImage.Warning
                 );
             }
+        }
+
+        private Predicate<object> GetEntityFilter(string filter)
+        {
+            return (obj) =>
+            {
+                var entity = (obj as EntityItemViewModel)!;
+                return entity.Name.Contains(filter, StringComparison.InvariantCultureIgnoreCase);
+            };
         }
     }
 }
