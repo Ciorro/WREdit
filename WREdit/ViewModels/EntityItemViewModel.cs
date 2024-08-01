@@ -5,18 +5,20 @@ using WREdit.Base.Translation;
 
 namespace WREdit.ViewModels
 {
-    internal class EntityItemViewModel : ObservableObject
+    internal partial class EntityItemViewModel : ObservableObject
     {
         private readonly ITranslationProvider _translationProvider;
 
-        public IEntity Entity { get; }
-        public bool IsSelected { get; set; }
+        [ObservableProperty]
+        private bool _isSelected;
 
         public EntityItemViewModel(IEntity entity, ITranslationProvider translationProvider)
         {
             _translationProvider = translationProvider;
             Entity = entity;
         }
+
+        public IEntity Entity { get; }
 
         public string EntityPath
         {

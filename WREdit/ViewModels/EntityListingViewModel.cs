@@ -70,6 +70,15 @@ namespace WREdit.ViewModels
         }
 
         [RelayCommand]
+        private void InvertSelection()
+        {
+            foreach (var entity in _entities)
+            {
+                entity.IsSelected = !entity.IsSelected;
+            }
+        }
+
+        [RelayCommand]
         private void SelectionChanged()
         {
             RemoveEntityCommand.NotifyCanExecuteChanged();
