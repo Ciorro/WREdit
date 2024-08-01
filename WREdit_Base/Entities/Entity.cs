@@ -20,6 +20,12 @@ namespace WREdit.Base.Entities
         public void Load()
         {
             Content = File.ReadAllText(FileName);
+
+            if (!(TrySelectNextProperty("$NAME_STR string", out _) || 
+                  TrySelectNextProperty("$NAME number", out _)))
+            {
+                throw new InvalidDataException("Invalid script.");
+            }
         }
 
         public void Save()

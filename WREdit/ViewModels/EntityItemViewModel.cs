@@ -10,10 +10,9 @@ namespace WREdit.ViewModels
 
         public bool IsSelected { get; set; }
 
-        public EntityItemViewModel(string entityPath)
+        public EntityItemViewModel(IEntity entity)
         {
-            Entity = new Entity(entityPath);
-            Entity.Load();
+            Entity = entity;
         }
 
         public string EntityPath

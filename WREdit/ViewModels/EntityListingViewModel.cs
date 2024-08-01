@@ -2,6 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows;
+using WREdit.Base.Entities;
 
 namespace WREdit.ViewModels
 {
@@ -20,11 +23,7 @@ namespace WREdit.ViewModels
 
             if (fileDialog.ShowDialog() == true)
             {
-                //TODO: Validate the path (the path has to point inside the game folder or workshop folder)
-                foreach (var file in fileDialog.FileNames)
-                {
-                    Entities.Add(new EntityItemViewModel(file));
-                }
+                LoadFiles(fileDialog.FileNames);
             }
         }
 
@@ -48,6 +47,36 @@ namespace WREdit.ViewModels
         private void SelectionChanged()
         {
             RemoveEntityCommand.NotifyCanExecuteChanged();
+        }
+
+        private void LoadFiles(IEnumerable<string> files)
+        {
+            var errors = new List<string>();
+
+            foreach (var file in files)
+            {
+                try
+                {
+                    var entityScript = new Entity(file);
+                    entityScript.Load();
+
+                    Entities.Add(new EntityItemViewModel(entityScript));
+                }
+                catch (InvalidDataException)
+                {
+                    errors.Add(file);
+                }
+            }
+
+            if (errors.Count > 0)
+            {
+                MessageBox.Show(
+                    $"{errors.Count} errors occurred during loading. The following files were not loaded:\n{string.Join('\n', errors)}",
+                    "Loading error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
         }
     }
 }
