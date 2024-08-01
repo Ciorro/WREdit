@@ -5,12 +5,19 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using WREdit.Base.Entities;
+using WREdit.Base.Translation;
 
 namespace WREdit.ViewModels
 {
     internal partial class EntityListingViewModel : ObservableObject
     {
+        private readonly ITranslationProvider _translationProvider;
         public ObservableCollection<EntityItemViewModel> Entities { get; } = new();
+
+        public EntityListingViewModel(ITranslationProvider translationProvider)
+        {
+            _translationProvider = translationProvider;
+        }
 
         [RelayCommand]
         private void AddEntity()
@@ -60,7 +67,7 @@ namespace WREdit.ViewModels
                     var entityScript = new Entity(file);
                     entityScript.Load();
 
-                    Entities.Add(new EntityItemViewModel(entityScript));
+                    Entities.Add(new EntityItemViewModel(entityScript, _translationProvider));
                 }
                 catch (InvalidDataException)
                 {

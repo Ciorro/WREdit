@@ -1,17 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.IO;
 using WREdit.Base.Entities;
+using WREdit.Base.Translation;
 
 namespace WREdit.ViewModels
 {
     internal class EntityItemViewModel : ObservableObject
     {
-        public IEntity Entity { get; }
+        private readonly ITranslationProvider _translationProvider;
 
+        public IEntity Entity { get; }
         public bool IsSelected { get; set; }
 
-        public EntityItemViewModel(IEntity entity)
+        public EntityItemViewModel(IEntity entity, ITranslationProvider translationProvider)
         {
+            _translationProvider = translationProvider;
             Entity = entity;
         }
 
@@ -34,13 +37,18 @@ namespace WREdit.ViewModels
 
         private string FindName()
         {
-            var nameProperty = Entity.SelectNextProperty("$NAME_STR string:name");
-            if (nameProperty is null)
+            if (Entity.TrySelectNextProperty("$NAME_STR string:name", out var nameStr))
             {
-                nameProperty = Entity.SelectNextProperty("$NAME number:name");
+                return nameStr.GetValue<string>("name");
             }
 
-            return nameProperty?["name"]?.ToString() ?? "Unknown";
+            if (Entity.TrySelectNextProperty("$NAME number:name", out var nameNum))
+            {
+                int nameId = nameNum.GetValue<int>("name");
+                return _translationProvider.GetString(nameId);
+            }
+
+            return "Unknown";
         }
 
         private string? FindIconPath()

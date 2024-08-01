@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.IO;
 using WREdit.Base.Plugins;
 using WREdit.Base.Processing.Execution;
+using WREdit.Base.Translation;
 
 namespace WREdit.ViewModels
 {
@@ -11,7 +13,11 @@ namespace WREdit.ViewModels
 
         public AppViewModel()
         {
-            EntitiesListing = new EntityListingViewModel();
+            ITranslationProvider translation = File.Exists("language.btf") ?
+                new BtfTranslationProvider("language.btf") :
+                new DefaultTranslationProvider();
+
+            EntitiesListing = new EntityListingViewModel(translation);
 
             ProcessorSettings = new ProcessorsPaneViewModel(new PluginManager("Plugins"));
             ProcessorSettings.PropertyChanged += (_, _) =>
