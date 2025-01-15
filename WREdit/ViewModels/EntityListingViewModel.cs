@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Data;
 using WREdit.Base.Entities;
 using WREdit.Base.Translation;
-using static System.Net.WebRequestMethods;
 
 namespace WREdit.ViewModels
 {
